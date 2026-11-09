@@ -3,193 +3,1045 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Belajar PvP Blox Fruits</title>
+<title>Belajar PvP Blox Fruits - Endless Community</title>
 <style>
-:root{--bg:#f3f6f1;--sf:#fff;--tx:#17231c;--mu:#5d6b62;--ac:#1f6f4a;--ac2:#e9f3ed;--bd:#d5ded7;--er:#b3261e;--cb:#14201a;--ct:#d8eadf}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1713;--sf:#17221c;--tx:#e6efe9;--mu:#98a89e;--ac:#4cc38a;--ac2:#1d2e25;--bd:#2a3a31;--er:#ff8a80;--cb:#0a110d;--ct:#d8eadf}}
-*{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--bg);color:var(--tx);font:16px/1.6 Georgia,"Times New Roman",serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
-h1,h2,h3,button,input,label,.sans{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-.wrap{max-width:720px;margin:0 auto;padding:20px 16px 40px}
-.brand{font:700 22px system-ui,sans-serif;margin:8px 0 18px}
-.brand span{color:var(--ac)}
-.card{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:18px;margin-bottom:16px}
-.tabs{display:flex;gap:6px;margin-bottom:16px}
-.tabs button{flex:1;padding:10px;border:1px solid var(--bd);background:var(--sf);color:var(--tx);border-radius:8px;font-weight:600;cursor:pointer}
-.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
-label{display:block;font-size:14px;font-weight:600;margin:12px 0 4px}
-input,textarea{width:100%;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;resize:vertical;padding:11px 12px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font-size:16px}
-input:focus,textarea:focus,button:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
-.btn{width:100%;margin-top:16px;padding:12px;border:0;border-radius:8px;background:var(--ac);color:#fff;font-size:16px;font-weight:700;cursor:pointer}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.btn.ghost{background:transparent;color:var(--ac);border:1px solid var(--ac);margin-top:10px}
-.msg{margin-top:12px;font:14px system-ui,sans-serif;min-height:1.2em}
-.msg.err{color:var(--er)}.msg.ok{color:var(--ac)}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.top button{background:none;border:1px solid var(--bd);color:var(--tx);padding:6px 12px;border-radius:8px;cursor:pointer}
-.prof{display:flex;gap:14px;align-items:center}
-.av{width:52px;height:52px;border-radius:50%;background:var(--ac);color:#fff;display:grid;place-items:center;font:700 22px system-ui,sans-serif;flex:none}
-.prof p{margin:0;font:14px system-ui,sans-serif;color:var(--mu)}
-.prof b{font-size:18px;color:var(--tx)}
-.badge{display:inline-block;padding:2px 10px;border-radius:99px;font:600 12px system-ui,sans-serif;margin-top:4px}
-.badge.v{background:var(--ac2);color:var(--ac)}.badge.n{background:#fdecea;color:#b3261e}
-.otp{text-align:center}
-.otp input{text-align:center;letter-spacing:.4em;font-size:22px}
-.bar{height:8px;background:var(--ac2);border-radius:99px;overflow:hidden;margin:8px 0 4px}
-.bar i{display:block;height:100%;background:var(--ac);width:0;transition:width .3s}
-.chs{list-style:none;margin:0;padding:0}
-.chs li{display:flex;gap:12px;align-items:center;padding:12px 4px;border-bottom:1px solid var(--bd);cursor:pointer;font-family:system-ui,sans-serif}
-.chs li:last-child{border:0}
-.chs .n{width:32px;height:32px;border-radius:8px;background:var(--ac2);color:var(--ac);display:grid;place-items:center;font-weight:700;flex:none}
-.chs li.done .n{background:var(--ac);color:#fff}
-.chs .t{flex:1}
-pre{background:var(--cb);color:var(--ct);padding:14px;border-radius:8px;overflow-x:auto;font:14px/1.5 ui-monospace,Menlo,Consolas,monospace;margin:14px 0}
-.nav{display:flex;gap:8px;margin-top:14px}
-.nav .btn{margin-top:0}
-#cb ul{padding-left:20px;margin:12px 0}#cb li{margin-bottom:12px}#cb b{font-family:system-ui,sans-serif}
-.badge.p{background:#fff4d6;color:#8a5a00}
-.cb{border-top:1px solid var(--bd);padding:14px 0;font-family:system-ui,sans-serif}
-.cb:first-child{border:0}
-.cb h3{margin:0 0 4px;font-size:16px}
-.cb p{margin:4px 0;font-size:14px;white-space:pre-wrap;word-break:break-word}
-.cb .k{color:var(--mu)}
-.cb a{color:var(--ac);word-break:break-all}
-.row{display:flex;gap:8px;margin-top:8px}
-.row .btn{margin-top:0}
-.btn.no{background:var(--er)}
-.sm{display:flex;flex-wrap:wrap;gap:6px 14px;font:13px system-ui,sans-serif;color:var(--mu);margin-bottom:12px}
-.ov{position:fixed;inset:0;z-index:50;background:rgba(8,16,12,.62);display:flex;align-items:center;justify-content:center;padding:20px;animation:fd .25s}
-.pop{background:var(--sf);color:var(--tx);border:1px solid var(--bd);border-radius:16px;max-width:420px;width:100%;padding:24px 22px;box-shadow:0 20px 50px rgba(0,0,0,.35);animation:up .3s}
-.pop h2{margin:0 0 10px;font-size:22px}
-.pop p{margin:0 0 12px;font-size:16px;line-height:1.65}
-.pop mark{background:var(--ac2);color:var(--ac);font-weight:700;padding:1px 6px;border-radius:6px}
-.pop .btn{margin-top:8px}
-@keyframes fd{from{opacity:0}to{opacity:1}}
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.ov,.pop{animation:none}}
-.hide{display:none!important}
-.mu{color:var(--mu);font:14px system-ui,sans-serif}
+:root {
+  --bg: #f4f6f4;
+  --sf: #ffffff;
+  --sf-card: #ffffff;
+  --tx: #142018;
+  --tx-soft: #2d3b32;
+  --mu: #57685d;
+  --mu-light: #8fa094;
+  --ac: #196844;
+  --ac-hover: #145537;
+  --ac2: #e7f2ec;
+  --ac3: #cfe4d7;
+  --bd: #d6ded7;
+  --bd-focus: #196844;
+  --er: #b3261e;
+  --er-bg: #fdecea;
+  --ok: #196844;
+  --warn: #946000;
+  --warn-bg: #fef7e6;
+  --cb: #0f1913;
+  --ct: #d5e8dc;
+  --sidebar-w: 260px;
+  --header-h: 60px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0c130f;
+    --sf: #141c17;
+    --sf-card: #19241e;
+    --tx: #e7f0ea;
+    --tx-soft: #c8d8ce;
+    --mu: #97a89d;
+    --mu-light: #64756b;
+    --ac: #42be84;
+    --ac-hover: #58cfa6;
+    --ac2: #1b2e23;
+    --ac3: #223f2f;
+    --bd: #26382e;
+    --bd-focus: #42be84;
+    --er: #ff8c82;
+    --er-bg: #321614;
+    --ok: #42be84;
+    --warn: #f5c451;
+    --warn-bg: #2d240d;
+    --cb: #070d0a;
+    --ct: #d5e8dc;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0c130f;
+  --sf: #141c17;
+  --sf-card: #19241e;
+  --tx: #e7f0ea;
+  --tx-soft: #c8d8ce;
+  --mu: #97a89d;
+  --mu-light: #64756b;
+  --ac: #42be84;
+  --ac-hover: #58cfa6;
+  --ac2: #1b2e23;
+  --ac3: #223f2f;
+  --bd: #26382e;
+  --bd-focus: #42be84;
+  --er: #ff8c82;
+  --er-bg: #321614;
+  --ok: #42be84;
+  --warn: #f5c451;
+  --warn-bg: #2d240d;
+  --cb: #070d0a;
+  --ct: #d5e8dc;
+}
+
+:root[data-theme="light"] {
+  --bg: #f4f6f4;
+  --sf: #ffffff;
+  --sf-card: #ffffff;
+  --tx: #142018;
+  --tx-soft: #2d3b32;
+  --mu: #57685d;
+  --mu-light: #8fa094;
+  --ac: #196844;
+  --ac-hover: #145537;
+  --ac2: #e7f2ec;
+  --ac3: #cfe4d7;
+  --bd: #d6ded7;
+  --bd-focus: #196844;
+  --er: #b3261e;
+  --er-bg: #fdecea;
+  --ok: #196844;
+  --warn: #946000;
+  --warn-bg: #fef7e6;
+  --cb: #0f1913;
+  --ct: #d5e8dc;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--tx);
+  font: 15px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  min-height: 100vh;
+}
+
+/* Base Typography & Controls */
+h1, h2, h3, h4, p, ul { margin: 0; padding: 0; }
+a { color: var(--ac); text-decoration: none; }
+a:hover { text-decoration: underline; }
+label { display: block; font-size: 13px; font-weight: 600; margin: 12px 0 5px; color: var(--tx-soft); }
+input, textarea {
+  width: 100%;
+  font-family: inherit;
+  padding: 10px 12px;
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-sm);
+  background: var(--sf);
+  color: var(--tx);
+  font-size: 14px;
+  transition: border-color .15s ease;
+}
+input:focus, textarea:focus, button:focus-visible {
+  outline: 2px solid var(--bd-focus);
+  outline-offset: 1px;
+}
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: 0;
+  background: none;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--ac);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background .15s ease, opacity .15s ease;
+}
+.btn:hover:not(:disabled) { background: var(--ac-hover); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn.ghost {
+  background: transparent;
+  color: var(--ac);
+  border: 1px solid var(--ac);
+}
+.btn.ghost:hover:not(:disabled) {
+  background: var(--ac2);
+}
+.btn.no {
+  background: var(--er);
+  color: #ffffff;
+}
+.btn.no:hover:not(:disabled) {
+  background: #981c15;
+}
+.btn.sm-btn {
+  width: auto;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.card {
+  background: var(--sf-card);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin-bottom: 16px;
+}
+.msg {
+  margin-top: 10px;
+  font-size: 13px;
+  min-height: 1.2em;
+}
+.msg.err { color: var(--er); }
+.msg.ok { color: var(--ok); }
+.mu { color: var(--mu); font-size: 13px; }
+.hide { display: none !important; }
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.badge.v { background: var(--ac2); color: var(--ac); border: 1px solid var(--ac3); }
+.badge.n { background: var(--er-bg); color: var(--er); border: 1px solid var(--er); }
+.badge.p { background: var(--warn-bg); color: var(--warn); border: 1px solid var(--warn); }
+
+/* Progress Bar */
+.bar {
+  height: 8px;
+  background: var(--ac2);
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.bar i {
+  display: block;
+  height: 100%;
+  background: var(--ac);
+  width: 0;
+  transition: width .3s ease;
+}
+
+/* APP SHELL: Layout Grid */
+#appShell {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+#sidebar {
+  width: var(--sidebar-w);
+  background: var(--sf);
+  border-right: 1px solid var(--bd);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 30;
+  transition: transform .2s ease;
+}
+.side-brand {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--bd);
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--tx);
+}
+.side-brand svg {
+  color: var(--ac);
+  flex-shrink: 0;
+}
+.side-brand small {
+  display: block;
+  font-size: 10px;
+  color: var(--mu);
+  font-weight: 500;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.side-nav {
+  flex: 1;
+  padding: 16px 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.side-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  color: var(--tx-soft);
+  font-weight: 500;
+  font-size: 14px;
+  text-align: left;
+  width: 100%;
+  transition: background .12s, color .12s;
+}
+.side-item:hover {
+  background: var(--ac2);
+  color: var(--ac);
+}
+.side-item.active {
+  background: var(--ac);
+  color: #ffffff;
+  font-weight: 600;
+}
+.side-item.active svg {
+  stroke: #ffffff;
+}
+.side-item svg {
+  flex-shrink: 0;
+  stroke: currentColor;
+}
+.side-item .nav-badge {
+  margin-left: auto;
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 99px;
+  background: var(--ac2);
+  color: var(--ac);
+}
+.side-item.active .nav-badge {
+  background: rgba(255,255,255,0.25);
+  color: #fff;
+}
+.side-footer {
+  padding: 14px 16px;
+  border-top: 1px solid var(--bd);
+  background: var(--sf);
+}
+.side-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.side-user .av {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--ac);
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.side-user-meta {
+  overflow: hidden;
+  flex: 1;
+}
+.side-user-meta b {
+  display: block;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.side-user-meta span {
+  display: block;
+  font-size: 11px;
+  color: var(--mu);
+}
+
+/* MAIN CONTENT AREA */
+#mainWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* HEADER */
+#header {
+  height: var(--header-h);
+  background: var(--sf);
+  border-bottom: 1px solid var(--bd);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.toggle-sidebar-btn {
+  display: none;
+  background: none;
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-sm);
+  color: var(--tx);
+  padding: 6px 8px;
+}
+.page-title-badge {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tx);
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.theme-btn, .logout-btn {
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--tx);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background .12s;
+}
+.theme-btn:hover, .logout-btn:hover {
+  background: var(--ac2);
+  color: var(--ac);
+}
+.user-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 99px;
+  background: var(--ac2);
+  color: var(--ac);
+}
+
+/* CONTENT VIEWPORT */
+#contentView {
+  flex: 1;
+  padding: 24px;
+  max-width: 1040px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* SIDEBAR BACKDROP FOR MOBILE */
+#sidebarBackdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 29;
+}
+
+/* AUTHENTICATION VIEW */
+.auth-wrapper {
+  max-width: 440px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+.auth-brand {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.auth-brand h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--tx);
+}
+.auth-brand span {
+  color: var(--ac);
+}
+.auth-brand p {
+  color: var(--mu);
+  font-size: 14px;
+  margin-top: 4px;
+}
+.auth-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.auth-tabs button {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--bd);
+  background: var(--sf);
+  color: var(--tx);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+.auth-tabs button.on {
+  background: var(--ac);
+  color: #ffffff;
+  border-color: var(--ac);
+}
+
+/* OVERVIEW DASHBOARD VIEW (STATISTICS & SUMMARY) */
+.dash-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.stat-box {
+  background: var(--sf-card);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.stat-box-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: var(--mu);
+  font-size: 13px;
+  font-weight: 600;
+}
+.stat-box-val {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--tx);
+  margin: 10px 0 4px;
+}
+.stat-box-desc {
+  font-size: 12px;
+  color: var(--mu);
+}
+.banner-callout {
+  background: var(--ac2);
+  border: 1px solid var(--ac3);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.banner-callout h3 {
+  font-size: 17px;
+  color: var(--tx);
+  margin-bottom: 4px;
+}
+.banner-callout p {
+  color: var(--tx-soft);
+  font-size: 13px;
+}
+
+/* MATERI VIEW */
+.chs { list-style: none; margin: 0; padding: 0; }
+.chs li {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 10px;
+  border-bottom: 1px solid var(--bd);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background .12s;
+}
+.chs li:hover {
+  background: var(--ac2);
+}
+.chs li:last-child { border-bottom: 0; }
+.chs .n {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--ac2);
+  color: var(--ac);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.chs li.done .n {
+  background: var(--ac);
+  color: #ffffff;
+}
+.chs .t {
+  flex: 1;
+  font-weight: 600;
+  font-size: 15px;
+}
+.chs .action-hint {
+  font-size: 12px;
+  color: var(--mu);
+}
+
+#cb ul { padding-left: 20px; margin: 14px 0; }
+#cb li { margin-bottom: 10px; font-size: 15px; }
+#cb b { color: var(--tx); }
+pre {
+  background: var(--cb);
+  color: var(--ct);
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+  font: 13px/1.5 ui-monospace, Menlo, Consolas, monospace;
+  margin: 14px 0;
+}
+.nav-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+.nav-row .btn { margin-top: 0; }
+
+/* COMBO VIEW */
+.cb {
+  border-top: 1px solid var(--bd);
+  padding: 14px 0;
+}
+.cb:first-child { border-top: 0; }
+.cb h3 { margin: 0 0 6px; font-size: 16px; }
+.cb p { margin: 4px 0; font-size: 13px; white-space: pre-wrap; word-break: break-word; }
+.cb .k { color: var(--mu); }
+.cb a { color: var(--ac); word-break: break-all; }
+.row { display: flex; gap: 8px; margin-top: 10px; }
+.row .btn { margin-top: 0; }
+
+/* ADMIN TABS & LIST */
+.admin-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.admin-tabs button {
+  padding: 8px 14px;
+  border: 1px solid var(--bd);
+  background: var(--sf);
+  color: var(--tx);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+}
+.admin-tabs button.on {
+  background: var(--ac);
+  color: #ffffff;
+  border-color: var(--ac);
+}
+.sm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-size: 13px;
+  color: var(--mu);
+}
+.sm span {
+  background: var(--ac2);
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: var(--ac);
+  font-weight: 600;
+}
+
+/* WELCOME POPUP */
+.ov {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(10, 18, 14, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.pop {
+  background: var(--sf);
+  color: var(--tx);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-lg);
+  max-width: 440px;
+  width: 100%;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+.pop h2 { margin: 0 0 10px; font-size: 20px; font-weight: 700; }
+.pop p { margin: 0 0 12px; font-size: 14px; line-height: 1.6; }
+.pop mark {
+  background: var(--ac2);
+  color: var(--ac);
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+/* RESPONSIVE STYLES */
+@media (max-width: 820px) {
+  #sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+    box-shadow: 0 0 25px rgba(0,0,0,0.25);
+  }
+  #sidebar.open {
+    transform: translateX(0);
+  }
+  #sidebarBackdrop.open {
+    display: block;
+  }
+  .toggle-sidebar-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #contentView {
+    padding: 16px;
+  }
+  .banner-callout {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="brand">Belajar PvP <span>Blox Fruits</span></div>
 
-  <!-- AUTH -->
-  <p id="load" class="mu">Memuat...</p>
-  <section id="auth" class="hide">
-    <div class="tabs">
-      <button id="tLogin" class="on">Masuk</button>
-      <button id="tReg">Daftar</button>
-    </div>
-    <div class="card">
-      <form id="fLogin" autocomplete="on">
-        <label for="lu">Username</label><input id="lu" autocomplete="username" required>
-        <label for="lp">Password</label><input id="lp" type="password" autocomplete="current-password" required>
-        <button class="btn" type="submit">Masuk</button>
-      </form>
-      <form id="fReg" class="hide" autocomplete="on">
-        <label for="ru">Username</label><input id="ru" autocomplete="username" pattern="[A-Za-z0-9_]{3,20}" title="3–20 karakter: huruf, angka, garis bawah" required>
-        <label for="rw">Nomor WhatsApp</label><input id="rw" type="tel" inputmode="numeric" placeholder="08123456789" autocomplete="tel" required>
-        <label for="rp">Password</label><input id="rp" type="password" minlength="6" autocomplete="new-password" required>
-        <button class="btn" type="submit">Buat akun</button>
-      </form>
-      <div id="authMsg" class="msg" role="alert"></div>
-    </div>
-  </section>
-
-  <!-- DASHBOARD -->
-  <section id="dash" class="hide">
-    <div class="top"><span class="mu">Dashboard</span><button id="out">Keluar</button></div>
-    <div class="card prof">
-      <div class="av" id="av"></div>
-      <div><b id="pu"></b><p id="pw"></p><span id="pb" class="badge"></span></div>
-    </div>
-
-    <!-- Gerbang OTP -->
-    <div id="gate" class="card otp hide">
-      <h2 style="margin:0 0 4px;font-size:20px">Verifikasi WhatsApp</h2>
-      <p class="mu" style="margin:0 0 6px">Kamu harus verifikasi OTP dulu sebelum bisa belajar. Kode dikirim ke <b id="gw"></b>.</p>
-      <button id="send" class="btn ghost">Kirim kode OTP</button>
-      <div id="otpBox" class="hide">
-        <label for="code" style="text-align:left">Masukkan kode OTP</label>
-        <input id="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="------" autocomplete="one-time-code">
-        <button id="ver" class="btn">Verifikasi</button>
-      </div>
-      <div id="otpMsg" class="msg" role="alert"></div>
-    </div>
-
-    <!-- Materi -->
-    <div id="course" class="hide">
-      <div class="tabs">
-        <button id="dMateri" class="on">Materi</button>
-        <button id="dCombo">Verifikasi Combo</button>
-        <button id="dAdmin" class="hide">Admin</button>
-      </div>
-
-      <div id="vMateri">
-        <div class="card">
-          <div class="top" style="margin:0"><b class="sans">Progres belajar</b><span id="pct" class="mu"></span></div>
-          <div class="bar"><i id="barI"></i></div>
-        </div>
-        <div id="list" class="card"><ul class="chs" id="chs"></ul></div>
-        <div id="chap" class="card hide">
-          <button id="back" class="sans" style="background:none;border:0;color:var(--ac);cursor:pointer;padding:0;font-weight:600">&larr; Daftar bab</button>
-          <h2 id="ct" style="margin:10px 0 0;font-size:22px"></h2>
-          <div id="cb"></div>
-          <pre id="cc" class="hide"></pre>
-          <div class="bar"><i id="wb"></i></div>
-          <div id="wait" class="mu" role="status"></div>
-          <div class="nav"><button id="prev" class="btn ghost">Sebelumnya</button><button id="next" class="btn">Lanjut</button></div>
-        </div>
-      </div>
-
-      <div id="vCombo" class="hide">
-        <form id="fCombo" class="card">
-          <h2 style="margin:0 0 2px;font-size:19px">Ajukan combo untuk diverifikasi</h2>
-          <p class="mu" style="margin:0">Admin akan memeriksa apakah combo kamu valid dan bisa dipakai di PvP.</p>
-          <label for="cn">Nama combo</label><input id="cn" maxlength="60" required>
-          <label for="cbd">Build / item (contoh: Ice + Sword + Melee)</label><input id="cbd" maxlength="80" required>
-          <label for="cs">Urutan skill (contoh: Ice V, Sword Z, Melee C, M1)</label><textarea id="cs" rows="3" maxlength="600" required></textarea>
-          <label for="cnt">Cara pakai: kondisi, jarak, kapan dipakai (opsional)</label><textarea id="cnt" rows="3" maxlength="600"></textarea>
-          <label for="cv">Link video bukti (opsional)</label><input id="cv" type="url" maxlength="300" placeholder="https://...">
-          <button class="btn" type="submit">Kirim untuk diverifikasi</button>
-          <div id="cMsg" class="msg" role="alert"></div>
-        </form>
-        <div class="card"><b class="sans">Combo saya</b><div id="mine" class="mu" style="margin-top:8px"></div></div>
-      </div>
-
-      <div id="vAdmin" class="hide">
-        <div class="card">
-          <b class="sans">Dashboard admin</b>
-          <div id="stats" class="sm" style="margin:6px 0 0"></div>
-        </div>
-        <div class="tabs" id="adTabs"></div>
-        <div class="card"><div id="adList" class="mu"></div></div>
-        <div class="card">
-          <div class="top" style="margin:0"><b class="sans">Verifikasi pengguna</b><span id="vcount" class="mu"></span></div>
-          <input id="uq" placeholder="Cari username..." style="margin-top:10px">
-          <div id="uList" style="margin-top:6px"></div>
-          <button id="revAll" class="btn no" type="button">Putuskan verifikasi semua pengguna</button>
-        </div>
-        <div id="adMsg" class="msg" role="alert"></div>
-      </div>
-    </div>
-    </section>
-</div>
-
+<!-- WELCOME POPUP -->
 <div id="welcome" class="ov hide" role="dialog" aria-modal="true" aria-labelledby="wt">
   <div class="pop">
     <h2 id="wt">Halo, saya <mark>arcz</mark></h2>
     <p>Saya adalah pendiri <mark>Endless Community</mark>.</p>
     <p>Web ini <mark>tidak meminta data pribadi</mark> Anda. Kami menggunakan <mark>verifikasi OTP</mark> untuk menghindari akun fake dan menjaga komunitas tetap aman.</p>
-    <button id="wok" class="btn" type="button">Mengerti, lanjut</button>
+    <button id="wok" class="btn" type="button" style="margin-top:14px">Mengerti, lanjut</button>
+  </div>
+</div>
+
+<!-- BACKDROP FOR MOBILE SIDEBAR -->
+<div id="sidebarBackdrop"></div>
+
+<!-- MAIN LAYOUT -->
+<div id="appShell">
+
+  <!-- SIDEBAR (Only visible when logged in) -->
+  <aside id="sidebar" class="hide">
+    <div class="side-brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+      </svg>
+      <div>
+        <span>Blox PvP</span>
+        <small>Endless Community</small>
+      </div>
+    </div>
+
+    <!-- Navigation List -->
+    <nav class="side-nav">
+      <button class="side-item active" id="navDash">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>Dashboard</span>
+      </button>
+
+      <button class="side-item" id="navMateri">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        <span>Materi Belajar</span>
+        <span class="nav-badge" id="sideMateriBadge">0</span>
+      </button>
+
+      <button class="side-item" id="navCombo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="14.5" y1="9.5" x2="9.5" y2="14.5"></line>
+          <line x1="18.5" y1="5.5" x2="5.5" y2="18.5"></line>
+          <path d="M12 2l10 10-10 10-10-10z"></path>
+        </svg>
+        <span>Verifikasi Combo</span>
+      </button>
+
+      <button class="side-item hide" id="navAdmin">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <span>Panel Admin</span>
+      </button>
+    </nav>
+
+    <!-- Bottom User Info -->
+    <div class="side-footer">
+      <div class="side-user">
+        <div class="av" id="sideAv">U</div>
+        <div class="side-user-meta">
+          <b id="sideUsername">User</b>
+          <span id="sidePhone">0812...</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER (Header + Content) -->
+  <div id="mainWrapper">
+
+    <!-- HEADER (Visible when logged in) -->
+    <header id="header" class="hide">
+      <div class="header-left">
+        <button id="toggleSidebar" class="toggle-sidebar-btn" aria-label="Menu navigasi">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <span class="page-title-badge" id="headerPageTitle">Dashboard</span>
+      </div>
+
+      <div class="header-right">
+        <span id="headerStatusBadge" class="badge v">Terverifikasi</span>
+        <button id="themeToggle" class="theme-btn" title="Ganti Tema">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+        <button id="out" class="logout-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Keluar</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT VIEW -->
+    <main id="contentView">
+
+      <!-- LOADING STATE -->
+      <p id="load" class="mu" style="text-align:center;margin-top:40px">Memuat data...</p>
+
+      <!-- AUTH FORM (Login / Register) -->
+      <section id="auth" class="auth-wrapper hide">
+        <div class="auth-brand">
+          <h1>Belajar PvP <span>Blox Fruits</span></h1>
+          <p>Portal Resmi Pelatihan & Validasi Combo Endless Community</p>
+        </div>
+
+        <div class="auth-tabs">
+          <button id="tLogin" class="on">Masuk</button>
+          <button id="tReg">Daftar</button>
+        </div>
+
+        <div class="card">
+          <form id="fLogin" autocomplete="on">
+            <label for="lu">Username</label>
+            <input id="lu" autocomplete="username" placeholder="Masukkan username" required>
+            <label for="lp">Password</label>
+            <input id="lp" type="password" autocomplete="current-password" placeholder="Masukkan password" required>
+            <button class="btn" type="submit" style="margin-top:16px">Masuk</button>
+          </form>
+
+          <form id="fReg" class="hide" autocomplete="on">
+            <label for="ru">Username</label>
+            <input id="ru" autocomplete="username" pattern="[A-Za-z0-9_]{3,20}" title="3–20 karakter: huruf, angka, garis bawah" placeholder="3-20 karakter" required>
+            <label for="rw">Nomor WhatsApp</label>
+            <input id="rw" type="tel" inputmode="numeric" placeholder="08123456789" autocomplete="tel" required>
+            <label for="rp">Password</label>
+            <input id="rp" type="password" minlength="6" autocomplete="new-password" placeholder="Minimal 6 karakter" required>
+            <button class="btn" type="submit" style="margin-top:16px">Buat Akun</button>
+          </form>
+
+          <div id="authMsg" class="msg" role="alert"></div>
+        </div>
+      </section>
+
+      <!-- OTP GATE (WhatsApp Verification) -->
+      <div id="gate" class="card hide" style="max-width:540px;margin:20px auto;text-align:center">
+        <h2 style="font-size:20px;margin-bottom:6px">Verifikasi Nomor WhatsApp</h2>
+        <p class="mu" style="margin-bottom:14px">
+          Kamu harus verifikasi OTP terlebih dahulu sebelum membuka materi PvP. Kode akan dikirimkan ke <b id="gw"></b> via WhatsApp.
+        </p>
+        <button id="send" class="btn ghost">Kirim kode OTP</button>
+
+        <div id="otpBox" class="hide" style="margin-top:16px;text-align:left">
+          <label for="code">Masukkan 6 Digit Kode OTP</label>
+          <input id="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="000000" style="text-align:center;letter-spacing:0.3em;font-size:20px" autocomplete="one-time-code">
+          <button id="ver" class="btn" style="margin-top:12px">Verifikasi Sekarang</button>
+        </div>
+        <div id="otpMsg" class="msg" role="alert"></div>
+      </div>
+
+      <!-- APP CONTENT (When Authenticated and Verified) -->
+      <div id="course" class="hide">
+
+        <!-- 1. DASHBOARD OVERVIEW VIEW -->
+        <section id="vDash">
+          <div class="banner-callout">
+            <div>
+              <h3>Selamat Datang di Portal PvP Blox Fruits</h3>
+              <p>Pelajari strategi movement, mekanik Ken Haki (Instinct), combo chaining, dan uji kelayakan combo kamu langsung ke admin.</p>
+            </div>
+            <button id="quickLearnBtn" class="btn sm-btn">Lanjut Belajar &rarr;</button>
+          </div>
+
+          <div class="dash-overview-grid">
+            <div class="stat-box">
+              <div class="stat-box-top">
+                <span>PROGRES MATERI</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              </div>
+              <div class="stat-box-val" id="dashProgVal">0%</div>
+              <div class="stat-box-desc" id="dashProgSub">0 dari 0 bab selesai</div>
+              <div class="bar" style="margin-top:8px"><i id="dashProgBar"></i></div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-box-top">
+                <span>STATUS AKUN</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+              <div class="stat-box-val" style="font-size:20px" id="dashStatusVal">Terverifikasi</div>
+              <div class="stat-box-desc" id="dashStatusSub">Akses penuh ke semua materi</div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-box-top">
+                <span>COMBO DIAJUKAN</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              </div>
+              <div class="stat-box-val" id="dashComboCount">0</div>
+              <div class="stat-box-desc">Combo telah dikirim untuk verifikasi</div>
+            </div>
+          </div>
+
+          <!-- Quick Navigation Cards -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+            <div class="card" style="margin:0">
+              <h3 style="font-size:16px;margin-bottom:6px">Materi Latihan Terkini</h3>
+              <p class="mu" style="margin-bottom:14px">Pelajari materi step-by-step dan pahami setiap timing skill.</p>
+              <button id="dashToMateriBtn" class="btn ghost sm-btn">Buka Daftar Bab</button>
+            </div>
+            <div class="card" style="margin:0">
+              <h3 style="font-size:16px;margin-bottom:6px">Uji Combo Baru</h3>
+              <p class="mu" style="margin-bottom:14px">Punya build unik? Kirim urutan skill & video agar diverifikasi komunitas.</p>
+              <button id="dashToComboBtn" class="btn ghost sm-btn">Ajukan Combo</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. MATERI VIEW -->
+        <section id="vMateri" class="hide">
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <b style="font-size:15px">Progres Belajar Materi PvP</b>
+              <span id="pct" class="mu">0 dari 0 bab</span>
+            </div>
+            <div class="bar"><i id="barI"></i></div>
+          </div>
+
+          <div id="list" class="card">
+            <ul class="chs" id="chs"></ul>
+          </div>
+
+          <div id="chap" class="card hide">
+            <button id="back" style="display:inline-flex;align-items:center;gap:6px;color:var(--ac);font-weight:600;font-size:14px;margin-bottom:12px">
+              &larr; Kembali ke daftar bab
+            </button>
+            <h2 id="ct" style="font-size:22px;margin-bottom:14px"></h2>
+            <div id="cb"></div>
+            <pre id="cc" class="hide"></pre>
+            <div class="bar"><i id="wb"></i></div>
+            <div id="wait" class="mu" role="status" style="margin-top:6px"></div>
+            <div class="nav-row">
+              <button id="prev" class="btn ghost">Sebelumnya</button>
+              <button id="next" class="btn">Lanjut</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. COMBO VIEW -->
+        <section id="vCombo" class="hide">
+          <form id="fCombo" class="card">
+            <h2 style="font-size:18px;margin-bottom:4px">Ajukan Combo untuk Diverifikasi</h2>
+            <p class="mu" style="margin-bottom:12px">Admin akan memeriksa apakah combo kamu valid, konsisten, dan efektif untuk PvP di Blox Fruits.</p>
+
+            <label for="cn">Nama Combo</label>
+            <input id="cn" maxlength="60" placeholder="Contoh: Ice One-Shot Combo" required>
+
+            <label for="cbd">Build / Item yang Digunakan</label>
+            <input id="cbd" maxlength="80" placeholder="Contoh: Ice Fruit + Cursed Dual Katana + Godhuman + Soul Guitar" required>
+
+            <label for="cs">Urutan Skill</label>
+            <textarea id="cs" rows="3" maxlength="600" placeholder="Contoh: Ice V (Stun) -> CDK Z (Dash) -> Godhuman C -> Soul Guitar M1" required></textarea>
+
+            <label for="cnt">Cara Pakai & Catatan (Jarak, Counter Ken Haki, Kondisi)</label>
+            <textarea id="cnt" rows="3" maxlength="600" placeholder="Contoh: Pastikan musuh tidak sedang Ken-dodging saat Ice V mendarat..."></textarea>
+
+            <label for="cv">Link Video Bukti / YouTube / Streamable (Opsional)</label>
+            <input id="cv" type="url" maxlength="300" placeholder="https://...">
+
+            <button class="btn" type="submit" style="margin-top:16px">Kirim untuk Diverifikasi</button>
+            <div id="cMsg" class="msg" role="alert"></div>
+          </form>
+
+          <div class="card">
+            <b style="font-size:15px;display:block;margin-bottom:10px">Daftar Combo Saya</b>
+            <div id="mine" class="mu">Belum ada combo yang diajukan.</div>
+          </div>
+        </section>
+
+        <!-- 4. ADMIN PANEL VIEW -->
+        <section id="vAdmin" class="hide">
+          <div class="card">
+            <b style="font-size:16px;display:block;margin-bottom:6px">Ringkasan Panel Admin</b>
+            <div id="stats" class="sm"></div>
+          </div>
+
+          <div class="admin-tabs" id="adTabs"></div>
+          <div class="card">
+            <b style="font-size:15px;display:block;margin-bottom:8px">Daftar Pengajuan Combo</b>
+            <div id="adList" class="mu"></div>
+          </div>
+
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <b style="font-size:15px">Verifikasi Pengguna</b>
+              <span id="vcount" class="mu"></span>
+            </div>
+            <input id="uq" placeholder="Cari berdasarkan username..." style="margin-bottom:12px">
+            <div id="uList"></div>
+            <button id="revAll" class="btn no" type="button" style="margin-top:16px">Putuskan Verifikasi Semua Pengguna</button>
+          </div>
+          <div id="adMsg" class="msg" role="alert"></div>
+        </section>
+
+      </div>
+    </main>
   </div>
 </div>
 
 <script>
-// ===== SUPABASE =====
+// ===== SUPABASE CLIENT CONFIG =====
 const SB = "https://dbbfoisrphocoyddgyhu.supabase.co";
 const KEY = "sb_publishable_PmYc-4IAfiNVPhvrH0fnvw_OBuK28Gd";
 const H = { "apikey": KEY, "Content-Type": "application/json" };
@@ -201,14 +1053,39 @@ const tok = {
   set(v){ try{ v ? localStorage.setItem("py_token", v) : localStorage.removeItem("py_token"); }catch(e){} }
 };
 
+// THEME TOGGLE (Dark / Light)
+const theme = {
+  get(){ try{ return localStorage.getItem("app_theme") || "dark"; }catch(e){ return "dark"; } },
+  set(v){ try{ localStorage.setItem("app_theme", v); }catch(e){} }
+};
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme", t);
+  theme.set(t);
+}
+applyTheme(theme.get());
+$("themeToggle").onclick = () => {
+  const curTheme = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+  applyTheme(curTheme);
+};
+
+// MOBILE SIDEBAR TOGGLE
+$("toggleSidebar").onclick = () => {
+  $("sidebar").classList.toggle("open");
+  $("sidebarBackdrop").classList.toggle("open");
+};
+$("sidebarBackdrop").onclick = () => {
+  $("sidebar").classList.remove("open");
+  $("sidebarBackdrop").classList.remove("open");
+};
+
 async function rpc(fn, args){
-  const r = await fetch(SB + "/rest/v1/rpc/" + fn, { method:"POST", headers:H, body:JSON.stringify(args) });
+  const r = await fetch(SB + "/rest/v1/rpc/" + fn, { method: "POST", headers: H, body: JSON.stringify(args) });
   if(!r.ok) throw new Error("Koneksi ke server gagal (" + r.status + ")");
   const t = await r.text();
   return t ? JSON.parse(t) : null;
 }
 async function otpCall(action, code){
-  const r = await fetch(SB + "/functions/v1/py-otp", { method:"POST", headers:H, body:JSON.stringify({ action, token, code }) });
+  const r = await fetch(SB + "/functions/v1/py-otp", { method: "POST", headers: H, body: JSON.stringify({ action, token, code }) });
   let d = {}; try{ d = await r.json(); }catch(e){}
   if(!r.ok || d.error) throw new Error(d.error || "Permintaan gagal (" + r.status + ")");
   return d;
@@ -222,7 +1099,7 @@ function normPhone(p){
 
 let token = tok.get(), me = null, CH = [], cur = 0;
 
-// ===== AUTH =====
+// ===== AUTH TABS & SUBMISSION =====
 function tab(reg){
   $("tLogin").classList.toggle("on", !reg); $("tReg").classList.toggle("on", reg);
   $("fLogin").classList.toggle("hide", reg); $("fReg").classList.toggle("hide", !reg);
@@ -251,7 +1128,7 @@ $("out").onclick = async () => {
   token = null; me = null; tok.set(null); CH = []; show();
 };
 
-// ===== OTP =====
+// ===== OTP COOLDOWN & VERIFY =====
 let cd = 0, timer;
 function cooldown(){
   clearInterval(timer);
@@ -283,7 +1160,7 @@ $("ver").onclick = async () => {
 
 // ===== POPUP SAMBUTAN =====
 let welcomed = false;
-function closeWelcome(){ $("welcome").classList.add("hide"); $("lu").focus(); }
+function closeWelcome(){ $("welcome").classList.add("hide"); if($("lu")) $("lu").focus(); }
 function openWelcome(){
   if(welcomed) return; welcomed = true;
   $("welcome").classList.remove("hide"); $("wok").focus();
@@ -292,17 +1169,66 @@ $("wok").onclick = closeWelcome;
 $("welcome").onclick = e => { if(e.target === $("welcome")) closeWelcome(); };
 document.addEventListener("keydown", e => { if(e.key === "Escape" && !$("welcome").classList.contains("hide")) closeWelcome(); });
 
-// ===== TAB =====
-const VIEWS = ["Materi", "Combo", "Admin"];
+// ===== NAVIGATION & VIEWS =====
+const VIEWS = ["Dash", "Materi", "Combo", "Admin"];
 function view(v){
   if(v !== "Materi") stopTimer();
-  VIEWS.forEach(n => { $("v" + n).classList.toggle("hide", n !== v); $("d" + n).classList.toggle("on", n === v); });
+  VIEWS.forEach(n => {
+    const elSec = $("v" + n);
+    if(elSec) elSec.classList.toggle("hide", n !== v);
+    const navBtn = $("nav" + n);
+    if(navBtn) navBtn.classList.toggle("active", n === v);
+  });
+
+  const titles = {
+    Dash: "Dashboard",
+    Materi: "Materi Belajar",
+    Combo: "Verifikasi Combo",
+    Admin: "Panel Admin"
+  };
+  $("headerPageTitle").textContent = titles[v] || "Dashboard";
+
+  // Close sidebar on mobile on select
+  $("sidebar").classList.remove("open");
+  $("sidebarBackdrop").classList.remove("open");
+
+  if(v === "Dash") updateDashboardOverview();
   if(v === "Materi") backToList();
   if(v === "Combo") loadMine();
   if(v === "Admin"){ loadAdmin(); loadUsers(); }
 }
-VIEWS.forEach(n => $("d" + n).onclick = () => view(n));
-function el(tag, cls, text){ const e = document.createElement(tag); if(cls) e.className = cls; if(text != null) e.textContent = text; return e; }
+
+$("navDash").onclick = () => view("Dash");
+$("navMateri").onclick = () => view("Materi");
+$("navCombo").onclick = () => view("Combo");
+$("navAdmin").onclick = () => view("Admin");
+
+$("quickLearnBtn").onclick = () => view("Materi");
+$("dashToMateriBtn").onclick = () => view("Materi");
+$("dashToComboBtn").onclick = () => view("Combo");
+
+function el(tag, cls, text){
+  const e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(text != null) e.textContent = text;
+  return e;
+}
+
+// ===== DASHBOARD OVERVIEW =====
+function updateDashboardOverview(){
+  if(!me) return;
+  const doneCount = me.done ? me.done.length : 0;
+  const totalCount = CH.length || 0;
+  const pct = totalCount ? Math.round(doneCount / totalCount * 100) : 0;
+
+  $("dashProgVal").textContent = pct + "%";
+  $("dashProgSub").textContent = doneCount + " dari " + totalCount + " bab selesai";
+  $("dashProgBar").style.width = pct + "%";
+
+  $("dashStatusVal").textContent = me.verified ? "Terverifikasi" : "Belum OTP";
+  $("dashStatusVal").style.color = me.verified ? "var(--ok)" : "var(--er)";
+  $("dashStatusSub").textContent = me.verified ? "Akses penuh ke semua materi" : "Lakukan verifikasi OTP";
+}
 
 // ===== MATERI =====
 let openId = 0, tmr;
@@ -310,25 +1236,31 @@ function stopTimer(){ clearInterval(tmr); openId++; }
 function drawList(){
   const ul = $("chs"); ul.innerHTML = "";
   CH.forEach((c, i) => {
-    const d = me.done.includes(c.n), li = document.createElement("li");
+    const d = me.done && me.done.includes(c.n);
+    const li = document.createElement("li");
     if(d) li.className = "done";
-    li.innerHTML = '<span class="n"></span><span class="t"></span>';
-    li.children[0].textContent = d ? "\u2713" : c.n;
+    li.innerHTML = '<span class="n"></span><div class="t"></div><span class="action-hint"></span>';
+    li.children[0].textContent = d ? "✓" : c.n;
     li.children[1].textContent = c.title;
+    li.children[2].textContent = d ? "Selesai" : "Mulai";
     li.onclick = () => open(i);
     ul.appendChild(li);
   });
-  $("pct").textContent = me.done.length + " dari " + CH.length + " bab";
-  $("barI").style.width = Math.round(me.done.length / CH.length * 100) + "%";
+  const doneCount = me.done ? me.done.length : 0;
+  $("pct").textContent = doneCount + " dari " + CH.length + " bab";
+  $("barI").style.width = (CH.length ? Math.round(doneCount / CH.length * 100) : 0) + "%";
+  $("sideMateriBadge").textContent = doneCount + "/" + CH.length;
 }
 function backToList(){
   stopTimer();
-  $("chap").classList.add("hide"); $("list").classList.remove("hide"); drawList();
+  $("chap").classList.add("hide");
+  $("list").classList.remove("hide");
+  drawList();
 }
 $("back").onclick = backToList;
 
 function finishUI(i){
-  $("wait").textContent = "Bab selesai \u2713 Progres tersimpan otomatis.";
+  $("wait").textContent = "Bab selesai ✓ Progres tersimpan otomatis.";
   $("wb").style.width = "100%";
   $("next").disabled = i === CH.length - 1;
 }
@@ -337,37 +1269,57 @@ function arm(end, id, c, i){
   tmr = setInterval(async () => {
     const left = Math.ceil((end - Date.now()) / 1000);
     $("wb").style.width = Math.max(0, Math.min(100, (10 - left) * 10)) + "%";
-    if(left > 0){ $("wait").textContent = "Baca dulu, lanjut dalam " + left + " detik"; return; }
+    if(left > 0){
+      $("wait").textContent = "Baca dulu materi ini, lanjut dalam " + left + " detik...";
+      return;
+    }
     clearInterval(tmr);
     try{
       const r = await rpc("py_finish", { p_token: token, p_chapter: c.n });
       if(id !== openId) return;
       if(r.error === "too_early") return arm(Date.now() + (r.wait || 1) * 1000, id, c, i);
       if(r.error) return boot();
-      me.done = r.done; finishUI(i);
+      me.done = r.done;
+      finishUI(i);
+      updateDashboardOverview();
     }catch(e){ if(id === openId) $("wait").textContent = e.message; }
   }, 250);
 }
 async function open(i){
-  const id = ++openId; clearInterval(tmr);
-  cur = i; const c = CH[i];
+  const id = ++openId;
+  clearInterval(tmr);
+  cur = i;
+  const c = CH[i];
   $("ct").textContent = "Bab " + c.n + ": " + c.title;
+
   const ul = document.createElement("ul");
   c.body.split("\n").forEach(line => {
-    const k = line.indexOf(":"), li = document.createElement("li");
-    if(k > 0){ const b = document.createElement("b"); b.textContent = line.slice(0, k + 1); li.append(b, " " + line.slice(k + 1).trim()); }
-    else li.textContent = line;
+    const k = line.indexOf(":");
+    const li = document.createElement("li");
+    if(k > 0){
+      const b = document.createElement("b");
+      b.textContent = line.slice(0, k + 1);
+      li.append(b, " " + line.slice(k + 1).trim());
+    } else {
+      li.textContent = line;
+    }
     ul.appendChild(li);
   });
   $("cb").replaceChildren(ul);
-  $("cc").textContent = c.code; $("cc").classList.toggle("hide", !c.code);
-  $("list").classList.add("hide"); $("chap").classList.remove("hide");
+  $("cc").textContent = c.code;
+  $("cc").classList.toggle("hide", !c.code);
+  $("list").classList.add("hide");
+  $("chap").classList.remove("hide");
   window.scrollTo(0, 0);
+
   $("prev").disabled = i === 0;
   $("next").textContent = i === CH.length - 1 ? "Selesai" : "Lanjut";
-  $("next").disabled = true; $("wb").style.width = "0";
-  if(me.done.includes(c.n)) return finishUI(i);
-  $("wait").textContent = "Memulai...";
+  $("next").disabled = true;
+  $("wb").style.width = "0";
+
+  if(me.done && me.done.includes(c.n)) return finishUI(i);
+
+  $("wait").textContent = "Memulai sesi baca materi...";
   try{
     const r = await rpc("py_start", { p_token: token, p_chapter: c.n });
     if(id !== openId) return;
@@ -383,37 +1335,56 @@ const ST = { pending: ["Menunggu", "p"], approved: ["Valid", "v"], rejected: ["D
 function comboCard(c, admin){
   const d = el("div", "cb");
   d.append(el("h3", "", c.title));
-  const b = el("span", "badge " + ST[c.status][1], ST[c.status][0]); d.append(b);
-  if(admin) d.append(el("p", "k", "Oleh: " + c.username));
+  const b = el("span", "badge " + (ST[c.status] ? ST[c.status][1] : "p"), (ST[c.status] ? ST[c.status][0] : c.status));
+  d.append(b);
+  if(admin) d.append(el("p", "k", "Pengirim: @" + c.username));
   d.append(el("p", "", "Build: " + c.build));
-  d.append(el("p", "", "Skill: " + c.steps));
-  if(c.notes) d.append(el("p", "", "Cara pakai: " + c.notes));
+  d.append(el("p", "", "Urutan Skill: " + c.steps));
+  if(c.notes) d.append(el("p", "", "Cara Pakai: " + c.notes));
   if(c.video_url && /^https?:\/\//i.test(c.video_url)){
-    const p = el("p", "", "Video: "), a = el("a", "", c.video_url);
-    a.href = c.video_url; a.target = "_blank"; a.rel = "noopener noreferrer"; p.append(a); d.append(p);
+    const p = el("p", "", "Video Bukti: ");
+    const a = el("a", "", c.video_url);
+    a.href = c.video_url; a.target = "_blank"; a.rel = "noopener noreferrer";
+    p.append(a); d.append(p);
   }
-  if(!admin && c.admin_note) d.append(el("p", "k", "Catatan admin: " + c.admin_note));
+  if(!admin && c.admin_note) d.append(el("p", "k", "Catatan Admin: " + c.admin_note));
   return d;
 }
 async function loadMine(){
-  const box = $("mine"); box.textContent = "Memuat...";
+  const box = $("mine");
+  box.textContent = "Memuat combo saya...";
   try{
     const r = await rpc("py_combo_mine", { p_token: token });
     if(r.error) return boot();
     box.replaceChildren();
-    if(!r.items.length) box.textContent = "Belum ada combo yang diajukan.";
+    const count = (r.items && r.items.length) || 0;
+    $("dashComboCount").textContent = count;
+    if(!count){
+      box.textContent = "Belum ada combo yang diajukan. Gunakan form di atas untuk mengirim combo kamu.";
+      return;
+    }
     r.items.forEach(c => box.append(comboCard(c, false)));
   }catch(e){ box.textContent = e.message; }
 }
 $("fCombo").onsubmit = async e => {
   e.preventDefault();
-  const b = e.target.querySelector("button"); b.disabled = true; say($("cMsg"), "Mengirim...");
+  const b = e.target.querySelector("button"); b.disabled = true; say($("cMsg"), "Mengirim data...");
   try{
-    const r = await rpc("py_combo_submit", { p_token: token, p_title: $("cn").value, p_build: $("cbd").value,
-      p_steps: $("cs").value, p_notes: $("cnt").value, p_video: $("cv").value });
+    const r = await rpc("py_combo_submit", {
+      p_token: token,
+      p_title: $("cn").value,
+      p_build: $("cbd").value,
+      p_steps: $("cs").value,
+      p_notes: $("cnt").value,
+      p_video: $("cv").value
+    });
     if(r.error === "session" || r.error === "not_verified") return boot();
     if(r.error) say($("cMsg"), r.error, "err");
-    else { e.target.reset(); say($("cMsg"), "Terkirim. Menunggu verifikasi admin.", "ok"); loadMine(); }
+    else {
+      e.target.reset();
+      say($("cMsg"), "Terkirim! Menunggu pemeriksaan dari admin.", "ok");
+      loadMine();
+    }
   }catch(err){ say($("cMsg"), err.message, "err"); }
   b.disabled = false;
 };
@@ -421,38 +1392,56 @@ $("fCombo").onsubmit = async e => {
 // ===== ADMIN =====
 let adSt = "pending";
 async function loadAdmin(){
-  const box = $("adList"); box.textContent = "Memuat..."; say($("adMsg"), "");
+  const box = $("adList"); box.textContent = "Memuat permohonan..."; say($("adMsg"), "");
   try{
     const r = await rpc("py_admin_list", { p_token: token, p_status: adSt });
     if(r.error === "session") return boot();
     if(r.error){ box.textContent = "Akses ditolak."; return; }
     const n = r.counts;
-    $("stats").replaceChildren(...["Pengguna: " + n.users, "Menunggu: " + n.pending, "Valid: " + n.approved, "Ditolak: " + n.rejected].map(t => el("span", "", t)));
+    $("stats").replaceChildren(...[
+      "Total Pengguna: " + n.users,
+      "Menunggu: " + n.pending,
+      "Valid: " + n.approved,
+      "Ditolak: " + n.rejected
+    ].map(t => el("span", "", t)));
+
     const tabs = $("adTabs"); tabs.replaceChildren();
     [["pending", "Menunggu (" + n.pending + ")"], ["approved", "Valid"], ["rejected", "Ditolak"]].forEach(([k, t]) => {
-      const b = el("button", k === adSt ? "on" : "", t); b.onclick = () => { adSt = k; loadAdmin(); }; tabs.append(b);
+      const b = el("button", k === adSt ? "on" : "", t);
+      b.onclick = () => { adSt = k; loadAdmin(); };
+      tabs.append(b);
     });
+
     box.replaceChildren();
-    if(!r.items.length) box.textContent = "Tidak ada permohonan.";
+    if(!r.items.length) box.textContent = "Tidak ada permohonan dalam kategori ini.";
     r.items.forEach(c => {
       const card = comboCard(c, true);
-      const note = el("textarea"); note.rows = 2; note.maxLength = 300; note.placeholder = "Catatan untuk pengguna (opsional)"; note.value = c.admin_note || "";
+      const note = el("textarea");
+      note.rows = 2; note.maxLength = 300;
+      note.placeholder = "Catatan untuk pengguna (opsional)";
+      note.value = c.admin_note || "";
       const row = el("div", "row");
-      const ok = el("button", "btn", "Valid"), no = el("button", "btn no", "Tolak");
+      const ok = el("button", "btn sm-btn", "Setujui (Valid)");
+      const no = el("button", "btn no sm-btn", "Tolak");
+
       const send = async st => {
         ok.disabled = no.disabled = true;
         try{
           const x = await rpc("py_admin_review", { p_token: token, p_id: c.id, p_status: st, p_note: note.value });
-          if(x.error) say($("adMsg"), "Gagal menyimpan keputusan.", "err"); else loadAdmin();
+          if(x.error) say($("adMsg"), "Gagal menyimpan keputusan.", "err");
+          else loadAdmin();
         }catch(e){ say($("adMsg"), e.message, "err"); ok.disabled = no.disabled = false; }
       };
-      ok.onclick = () => send("approved"); no.onclick = () => send("rejected");
-      row.append(ok, no); card.append(note, row); box.append(card);
+      ok.onclick = () => send("approved");
+      no.onclick = () => send("rejected");
+      row.append(ok, no);
+      card.append(note, row);
+      box.append(card);
     });
   }catch(e){ box.textContent = e.message; }
 }
 
-// ===== ADMIN: VERIFIKASI PENGGUNA =====
+// ===== ADMIN: USER VERIFICATION =====
 async function loadUsers(){
   const box = $("uList");
   try{
@@ -463,16 +1452,27 @@ async function loadUsers(){
     box.replaceChildren();
     if(!r.items.length) box.append(el("p", "mu", "Pengguna tidak ditemukan."));
     r.items.forEach(u => {
-      const d = el("div", "cb"), t = el("div", "top"); t.style.margin = "0";
-      const l = el("div"); l.append(el("b", "", u.username + (u.is_admin ? " (admin)" : "")), el("p", "k", u.phone));
+      const d = el("div", "cb");
+      const t = el("div", "");
+      t.style.display = "flex";
+      t.style.justifyContent = "space-between";
+      t.style.alignItems = "center";
+
+      const l = el("div");
+      l.append(el("b", "", u.username + (u.is_admin ? " (admin)" : "")), el("p", "k", u.phone));
       t.append(l);
-      if(u.is_admin) t.append(el("span", "badge v", "Admin"));
-      else if(u.verified){
-        const b = el("button", "btn no", "Putuskan"); b.style.cssText = "width:auto;margin:0;padding:8px 14px";
-        b.onclick = () => revoke(u.id, false, "Putuskan verifikasi " + u.username + "? Dia harus OTP ulang untuk belajar lagi.", b);
+
+      if(u.is_admin){
+        t.append(el("span", "badge v", "Admin"));
+      } else if(u.verified){
+        const b = el("button", "btn no sm-btn", "Putuskan");
+        b.onclick = () => revoke(u.id, false, "Putuskan verifikasi " + u.username + "? Pengguna harus OTP ulang.", b);
         t.append(b);
-      } else t.append(el("span", "badge n", "Belum verifikasi"));
-      d.append(t); box.append(d);
+      } else {
+        t.append(el("span", "badge n", "Belum verifikasi"));
+      }
+      d.append(t);
+      box.append(d);
     });
   }catch(e){ box.textContent = e.message; }
 }
@@ -488,9 +1488,10 @@ async function revoke(id, all, msg, btn){
   btn.disabled = false;
 }
 $("revAll").onclick = () => revoke(null, true, "Putuskan verifikasi SEMUA pengguna (kecuali admin)? Semua harus OTP ulang.", $("revAll"));
-let uqT; $("uq").oninput = () => { clearTimeout(uqT); uqT = setTimeout(loadUsers, 300); };
+let uqT;
+$("uq").oninput = () => { clearTimeout(uqT); uqT = setTimeout(loadUsers, 300); };
 
-// ===== RENDER =====
+// ===== INITIALIZATION & RENDER =====
 async function boot(){
   if(!token){ me = null; return show(); }
   try{
@@ -499,28 +1500,57 @@ async function boot(){
     me = m; CH = [];
     if(me.verified){
       const c = await rpc("py_chapters", { p_token: token });
-      if(c.chapters) CH = c.chapters; else me.verified = false;
+      if(c.chapters) CH = c.chapters;
+      else me.verified = false;
     }
   }catch(err){
-    $("load").textContent = err.message; return;
+    $("load").textContent = err.message;
+    return;
   }
   show();
 }
+
 function show(){
   $("load").classList.add("hide");
-  if(!me){ $("auth").classList.remove("hide"); $("dash").classList.add("hide"); openWelcome(); return; }
-  $("auth").classList.add("hide"); $("dash").classList.remove("hide");
-  $("av").textContent = me.username[0].toUpperCase();
-  $("pu").textContent = me.username;
-  $("pw").textContent = "WhatsApp: +" + me.phone;
-  $("pb").textContent = me.verified ? "Terverifikasi" : "Belum verifikasi";
-  $("pb").className = "badge " + (me.verified ? "v" : "n");
+
+  if(!me){
+    $("auth").classList.remove("hide");
+    $("sidebar").classList.add("hide");
+    $("header").classList.add("hide");
+    $("gate").classList.add("hide");
+    $("course").classList.add("hide");
+    openWelcome();
+    return;
+  }
+
+  // User is logged in
+  $("auth").classList.add("hide");
+  $("sidebar").classList.remove("hide");
+  $("header").classList.remove("hide");
+
+  // Profile metadata
+  $("sideAv").textContent = (me.username && me.username[0].toUpperCase()) || "U";
+  $("sideUsername").textContent = me.username;
+  $("sidePhone").textContent = "+" + me.phone;
+
+  $("headerStatusBadge").textContent = me.verified ? "Terverifikasi" : "Belum OTP";
+  $("headerStatusBadge").className = "badge " + (me.verified ? "v" : "n");
+
   $("gw").textContent = "+" + me.phone;
   $("gate").classList.toggle("hide", me.verified);
   $("course").classList.toggle("hide", !me.verified);
-  $("dAdmin").classList.toggle("hide", !me.is_admin);
-  if(me.verified) view("Materi");
+  $("navAdmin").classList.toggle("hide", !me.is_admin);
+
+  if(me.verified){
+    view("Dash");
+    // Pre-load combo count in background for dashboard
+    rpc("py_combo_mine", { p_token: token }).then(r => {
+      if(r && r.items) $("dashComboCount").textContent = r.items.length;
+    }).catch(() => {});
+  }
 }
+
+// Start application
 boot();
 </script>
 </body>
