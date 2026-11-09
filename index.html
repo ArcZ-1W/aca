@@ -59,6 +59,15 @@ pre{background:var(--cb);color:var(--ct);padding:14px;border-radius:8px;overflow
 .row .btn{margin-top:0}
 .btn.no{background:var(--er)}
 .sm{display:flex;flex-wrap:wrap;gap:6px 14px;font:13px system-ui,sans-serif;color:var(--mu);margin-bottom:12px}
+.ov{position:fixed;inset:0;z-index:50;background:rgba(8,16,12,.62);display:flex;align-items:center;justify-content:center;padding:20px;animation:fd .25s}
+.pop{background:var(--sf);color:var(--tx);border:1px solid var(--bd);border-radius:16px;max-width:420px;width:100%;padding:24px 22px;box-shadow:0 20px 50px rgba(0,0,0,.35);animation:up .3s}
+.pop h2{margin:0 0 10px;font-size:22px}
+.pop p{margin:0 0 12px;font-size:16px;line-height:1.65}
+.pop mark{background:var(--ac2);color:var(--ac);font-weight:700;padding:1px 6px;border-radius:6px}
+.pop .btn{margin-top:8px}
+@keyframes fd{from{opacity:0}to{opacity:1}}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.ov,.pop{animation:none}}
 .hide{display:none!important}
 .mu{color:var(--mu);font:14px system-ui,sans-serif}
 </style>
@@ -170,6 +179,15 @@ pre{background:var(--cb);color:var(--ct);padding:14px;border-radius:8px;overflow
     </section>
 </div>
 
+<div id="welcome" class="ov hide" role="dialog" aria-modal="true" aria-labelledby="wt">
+  <div class="pop">
+    <h2 id="wt">Halo, saya <mark>arcz</mark></h2>
+    <p>Saya adalah pendiri <mark>Endless Community</mark>.</p>
+    <p>Web ini <mark>tidak meminta data pribadi</mark> Anda. Kami menggunakan <mark>verifikasi OTP</mark> untuk menghindari akun fake dan menjaga komunitas tetap aman.</p>
+    <button id="wok" class="btn" type="button">Mengerti, lanjut</button>
+  </div>
+</div>
+
 <script>
 // ===== SUPABASE =====
 const SB = "https://dbbfoisrphocoyddgyhu.supabase.co";
@@ -262,6 +280,17 @@ $("ver").onclick = async () => {
   catch(err){ say($("otpMsg"), err.message, "err"); $("code").value = ""; $("code").focus(); }
   b.disabled = false;
 };
+
+// ===== POPUP SAMBUTAN =====
+let welcomed = false;
+function closeWelcome(){ $("welcome").classList.add("hide"); $("lu").focus(); }
+function openWelcome(){
+  if(welcomed) return; welcomed = true;
+  $("welcome").classList.remove("hide"); $("wok").focus();
+}
+$("wok").onclick = closeWelcome;
+$("welcome").onclick = e => { if(e.target === $("welcome")) closeWelcome(); };
+document.addEventListener("keydown", e => { if(e.key === "Escape" && !$("welcome").classList.contains("hide")) closeWelcome(); });
 
 // ===== TAB =====
 const VIEWS = ["Materi", "Combo", "Admin"];
@@ -479,7 +508,7 @@ async function boot(){
 }
 function show(){
   $("load").classList.add("hide");
-  if(!me){ $("auth").classList.remove("hide"); $("dash").classList.add("hide"); return; }
+  if(!me){ $("auth").classList.remove("hide"); $("dash").classList.add("hide"); openWelcome(); return; }
   $("auth").classList.add("hide"); $("dash").classList.remove("hide");
   $("av").textContent = me.username[0].toUpperCase();
   $("pu").textContent = me.username;
