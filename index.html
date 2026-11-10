@@ -934,16 +934,19 @@ pre {
   }
 }
 
-/* ==================== CHAT PLACE STYLES ==================== */
+/* ==================== CHAT PLACE STYLES (ENHANCED & MOBILE COMPATIBLE) ==================== */
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 540px;
+  height: 600px;
+  max-height: calc(100vh - 200px);
+  min-height: 480px;
   background: var(--sf);
   border: 1px solid var(--bd);
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
+  position: relative;
 }
 .chat-header {
   padding: 12px 18px;
@@ -975,132 +978,427 @@ pre {
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.3); opacity: 0.7; }
 }
+
 .chat-messages {
   flex: 1;
-  padding: 18px;
+  padding: 18px 16px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  background: var(--sf);
+  background: var(--bg);
 }
+
+/* Chat bubble layout: Others on Left, Mine on Right */
 .chat-bubble {
   display: flex;
   gap: 10px;
-  align-items: flex-start;
+  align-items: flex-end;
+  max-width: 82%;
+  align-self: flex-start;
+  transition: transform var(--t-fast);
+}
+.chat-bubble.mine {
+  align-self: flex-end;
+  flex-direction: row-reverse;
 }
 .chat-bubble.new-entry {
   animation: viewFadeIn 0.22s var(--ease-out);
 }
+.chat-bubble.highlight-quote {
+  animation: quoteHighlight 1.2s var(--ease-out);
+}
+@keyframes quoteHighlight {
+  0% { transform: scale(1.03); filter: drop-shadow(0 0 8px var(--accent-emerald)); }
+  100% { transform: scale(1); filter: none; }
+}
+
 .chat-avatar {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: var(--ac);
-  color: var(--bg);
+  background: var(--sf-subtle);
+  color: var(--tx);
+  border: 1px solid var(--bd);
   display: grid;
   place-items: center;
   font-weight: 700;
   font-size: 13px;
   flex-shrink: 0;
+  user-select: none;
 }
-:root[data-theme="light"] .chat-avatar {
+.chat-bubble.mine .chat-avatar {
+  background: var(--ac);
+  color: var(--bg);
+  border-color: var(--ac);
+}
+:root[data-theme="light"] .chat-bubble.mine .chat-avatar {
   color: #ffffff;
 }
+
+/* Bubble Content Container */
 .chat-bubble-content {
-  max-width: 82%;
-  background: var(--sf-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--sf);
   border: 1px solid var(--bd);
-  border-radius: var(--radius-md);
+  border-radius: 14px 14px 14px 3px;
   padding: 10px 14px;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+  color: var(--tx);
   position: relative;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 .chat-bubble.mine .chat-bubble-content {
-  border-color: var(--bd-hover);
-  background: var(--sf-subtle);
+  background: #0f172a;
+  border-color: #1e293b;
+  border-radius: 14px 14px 3px 14px;
+  color: #ffffff;
 }
+:root[data-theme="dark"] .chat-bubble:not(.mine) .chat-bubble-content {
+  background: #1e293b;
+  border-color: #334561;
+  color: #f8fafc;
+}
+:root[data-theme="dark"] .chat-bubble.mine .chat-bubble-content {
+  background: #065f46;
+  border-color: #059669;
+  color: #ffffff;
+}
+
+/* Header inside bubble */
 .chat-bubble-header {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 11.5px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   flex-wrap: wrap;
 }
-.chat-bubble-header b {
+.chat-sender-name {
   font-size: 13px;
+  font-weight: 700;
   color: var(--tx);
 }
+.chat-bubble.mine .chat-sender-name {
+  color: #6ee7b7;
+}
+:root[data-theme="dark"] .chat-bubble:not(.mine) .chat-sender-name {
+  color: #93c5fd;
+}
+:root[data-theme="dark"] .chat-bubble.mine .chat-sender-name {
+  color: #a7f3d0;
+}
+
 .chat-time {
   color: var(--mu);
-  font-size: 11px;
+  font-size: 10.5px;
 }
-.chat-source-tag {
+.chat-bubble.mine .chat-time {
+  color: #94a3b8;
+}
+:root[data-theme="dark"] .chat-bubble.mine .chat-time {
+  color: #a7f3d0;
+  opacity: 0.85;
+}
+
+.chat-edited-tag {
   font-size: 10px;
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.chat-source-tag {
+  font-size: 9.5px;
   font-weight: 700;
-  padding: 1px 6px;
+  padding: 1px 5px;
   border-radius: 4px;
-  background: var(--bd);
+  background: var(--sf-muted);
+  border: 1px solid var(--bd);
   color: var(--tx-soft);
 }
+.chat-bubble.mine .chat-source-tag {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.2);
+  color: #e2e8f0;
+}
+
+/* Text Content */
 .chat-bubble-text {
   font-size: 13.5px;
   line-height: 1.5;
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+/* Quoted Reply Box inside Bubble */
+.chat-quote-box {
+  background: rgba(15, 23, 42, 0.05);
+  border-left: 3px solid var(--tx);
+  border-radius: 4px 8px 8px 4px;
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background var(--t-fast);
+}
+.chat-quote-box:hover {
+  background: rgba(15, 23, 42, 0.09);
+}
+.chat-quote-author {
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--tx);
+  margin-bottom: 2px;
+}
+.chat-quote-snippet {
+  color: var(--tx-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 280px;
+}
+.chat-bubble.mine .chat-quote-box {
+  background: rgba(255, 255, 255, 0.12);
+  border-left-color: #38bdf8;
+}
+.chat-bubble.mine .chat-quote-box:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+.chat-bubble.mine .chat-quote-author {
+  color: #6ee7b7;
+}
+.chat-bubble.mine .chat-quote-snippet {
+  color: #f1f5f9;
+}
+:root[data-theme="dark"] .chat-bubble:not(.mine) .chat-quote-box {
+  background: rgba(255, 255, 255, 0.06);
+  border-left-color: #38bdf8;
+}
+:root[data-theme="dark"] .chat-bubble:not(.mine) .chat-quote-author {
+  color: #93c5fd;
+}
+:root[data-theme="dark"] .chat-bubble:not(.mine) .chat-quote-snippet {
+  color: #cbd5e1;
+}
+
+/* Action Toolbar on Message */
+.chat-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px dashed rgba(120,120,120,0.18);
+  font-size: 11px;
+  flex-wrap: wrap;
+}
+.chat-act-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--tx-soft);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: all var(--t-fast);
+}
+.chat-act-btn:hover {
+  background: rgba(0,0,0,0.06);
   color: var(--tx);
 }
-.chat-img-preview {
+.chat-bubble.mine .chat-act-btn {
+  color: #cbd5e1;
+}
+.chat-bubble.mine .chat-act-btn:hover {
+  background: rgba(255,255,255,0.15);
+  color: #ffffff;
+}
+.chat-act-btn.del {
+  color: var(--er);
+}
+.chat-act-btn.del:hover {
+  background: var(--er-bg);
+}
+.chat-bubble.mine .chat-act-btn.del {
+  color: #fca5a5;
+}
+
+/* Image & Video previews */
+.chat-img-preview, .chat-video-preview {
   max-width: 100%;
   max-height: 240px;
   border-radius: var(--radius-sm);
-  margin-top: 8px;
-  cursor: pointer;
+  margin-top: 6px;
   border: 1px solid var(--bd);
   display: block;
+}
+.chat-img-preview {
+  cursor: pointer;
   transition: transform var(--t-fast) var(--spring-snappy);
 }
 .chat-img-preview:hover {
   transform: scale(1.02);
 }
+
+/* Sticker Display */
+.chat-sticker-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 2px 0 !important;
+}
+.chat-sticker-img {
+  width: 135px;
+  height: 135px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
+  cursor: pointer;
+  transition: transform var(--t-fast) var(--spring-bounce);
+}
+.chat-sticker-img:hover {
+  transform: scale(1.08);
+}
+.chat-sticker-fav-btn {
+  background: var(--sf);
+  border: 1px solid var(--bd);
+  color: var(--tx);
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--t-fast);
+}
+.chat-sticker-fav-btn:hover {
+  background: var(--sf-muted);
+  transform: scale(1.04);
+}
+
+/* Audio Player */
+.chat-audio-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 220px;
+  max-width: 100%;
+  padding: 4px 0;
+}
+.chat-audio-title {
+  font-size: 11.5px;
+  font-weight: 600;
+  opacity: 0.85;
+}
+.chat-audio-player {
+  width: 100%;
+  height: 36px;
+  border-radius: 18px;
+  outline: none;
+}
+
+/* File Card */
 .chat-file-card {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 8px;
-  padding: 6px 12px;
-  background: var(--sf);
+  margin-top: 6px;
+  padding: 8px 12px;
+  background: var(--sf-muted);
   border: 1px solid var(--bd);
   border-radius: var(--radius-xs);
   font-size: 12.5px;
   font-weight: 600;
   color: var(--tx);
+  text-decoration: none;
 }
-.chat-del-btn {
+
+/* Bars above input: Reply Bar, Edit Bar, Voice Recording Bar */
+.chat-banner-bar {
+  padding: 8px 16px;
+  background: var(--sf-muted);
+  border-top: 1px solid var(--bd);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12.5px;
+  color: var(--tx);
+  animation: viewFadeIn 0.18s var(--ease-out);
+}
+.chat-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.chat-banner-bar .close-btn {
   background: none;
   border: none;
-  color: var(--er);
-  font-size: 11px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--mu);
   cursor: pointer;
-  padding: 2px 4px;
-  margin-left: auto;
-  opacity: 0.6;
-  transition: opacity var(--t-fast);
+  padding: 0 4px;
+  line-height: 1;
 }
-.chat-del-btn:hover {
-  opacity: 1;
-  text-decoration: underline;
+.chat-banner-bar .close-btn:hover {
+  color: var(--er);
 }
+
+/* Voice Recording Active Bar */
+.voice-record-bar {
+  padding: 10px 16px;
+  background: var(--er-bg);
+  border-top: 1px solid var(--er-bd);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--er);
+  animation: viewFadeIn 0.2s var(--ease-out);
+}
+.voice-rec-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--er);
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.25);
+  animation: pulseDot 1s infinite ease-in-out;
+}
+.voice-rec-timer {
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Chat Input Bar & Buttons */
 .chat-input-bar {
-  padding: 12px 16px;
+  padding: 10px 14px;
   background: var(--sf);
   border-top: 1px solid var(--bd);
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
+  flex-wrap: nowrap;
 }
-.chat-attach-btn {
-  padding: 9px 12px;
+.chat-tool-btn {
+  padding: 8px 10px;
   border: 1px solid var(--bd);
   border-radius: var(--radius-sm);
   background: var(--sf-muted);
@@ -1108,18 +1406,118 @@ pre {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
+  justify-content: center;
+  gap: 5px;
+  font-size: 12.5px;
   font-weight: 600;
-  transition: background var(--t-fast), transform var(--t-fast);
+  transition: all var(--t-fast);
   flex-shrink: 0;
 }
-.chat-attach-btn:hover {
+.chat-tool-btn:hover {
   background: var(--bd);
   transform: translateY(-1px);
 }
-.chat-attach-btn:active {
-  transform: scale(0.96);
+.chat-tool-btn:active {
+  transform: scale(0.95);
+}
+
+/* Stickers Drawer / Modal */
+.sticker-drawer {
+  position: absolute;
+  bottom: 60px;
+  left: 12px;
+  right: 12px;
+  max-height: 280px;
+  background: var(--sf);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: viewFadeIn 0.2s var(--spring-snappy);
+}
+.sticker-drawer-header {
+  padding: 10px 14px;
+  background: var(--sf-muted);
+  border-bottom: 1px solid var(--bd);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tx);
+}
+.sticker-grid {
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 10px;
+  overflow-y: auto;
+  max-height: 220px;
+}
+.sticker-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--bd);
+  background: var(--sf-muted);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--t-fast) var(--spring-snappy), border-color var(--t-fast);
+}
+.sticker-item:hover {
+  transform: scale(1.06);
+  border-color: var(--tx);
+}
+.sticker-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.sticker-del-fav {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  background: var(--er);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 11px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #fff;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--t-fast);
+}
+.sticker-item:hover .sticker-del-fav {
+  opacity: 1;
+}
+
+/* Mobile Responsiveness for Chat */
+@media (max-width: 640px) {
+  .chat-container {
+    height: 520px;
+  }
+  .chat-bubble {
+    max-width: 90%;
+  }
+  .chat-input-bar {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  .chat-tool-btn span {
+    display: none;
+  }
+  .chat-tool-btn {
+    padding: 8px;
+  }
 }
 
 /* ==================== ACCESSIBILITY (PREFERS REDUCED MOTION) ==================== */
@@ -1265,7 +1663,6 @@ pre {
       </div>
 
       <div class="header-right">
-        <span id="headerStatusBadge" class="badge v">Terverifikasi</span>
         <button id="themeToggle" class="theme-btn" title="Ganti Tema">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="5"></circle>
@@ -1511,28 +1908,76 @@ pre {
             </div>
 
             <!-- Pratinjau File yang Dipilih -->
-            <div id="filePreviewBar" class="hide" style="padding:8px 16px;background:var(--sf-muted);border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between">
-              <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--tx);overflow:hidden">
+            <div id="filePreviewBar" class="chat-banner-bar hide">
+              <div class="chat-banner-left">
                 <span>📎</span>
                 <b id="filePreviewName" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">file.png</b>
                 <span id="filePreviewSize" class="mu">(0 KB)</span>
               </div>
-              <button id="fileCancelBtn" type="button" style="color:var(--er);font-weight:700;font-size:16px;padding:2px 8px;cursor:pointer">&times;</button>
+              <button id="fileCancelBtn" class="close-btn" type="button" title="Batalkan Berkas">&times;</button>
+            </div>
+
+            <!-- Balas Pesan Bar -->
+            <div id="chatReplyBar" class="chat-banner-bar hide">
+              <div class="chat-banner-left">
+                <span>↩️</span>
+                <span>Membalas <b id="replyTargetUser">@user</b>: <i id="replyTargetText"></i></span>
+              </div>
+              <button id="chatReplyCancelBtn" class="close-btn" type="button" title="Batalkan Balasan">&times;</button>
+            </div>
+
+            <!-- Edit Pesan Bar -->
+            <div id="chatEditBar" class="chat-banner-bar hide">
+              <div class="chat-banner-left">
+                <span>✏️</span>
+                <span>Mengedit pesan: <i id="editTargetText"></i></span>
+              </div>
+              <button id="chatEditCancelBtn" class="close-btn" type="button" title="Batalkan Edit">&times;</button>
+            </div>
+
+            <!-- Rekam Audio Bar -->
+            <div id="voiceRecordBar" class="voice-record-bar hide">
+              <div style="display:flex;align-items:center;gap:10px">
+                <i class="voice-rec-dot"></i>
+                <span style="font-weight:600;font-size:13px">Merekam VN...</span>
+                <span id="voiceRecTimer" class="voice-rec-timer">00:00</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <button id="voiceCancelBtn" type="button" class="btn no sm-btn" style="padding:4px 10px;font-size:12px">Batal</button>
+                <button id="voiceSendBtn" type="button" class="btn sm-btn" style="padding:4px 12px;font-size:12px;background:var(--accent-emerald)">Kirim VN</button>
+              </div>
+            </div>
+
+            <!-- Drawer Stiker Favorit -->
+            <div id="stickerDrawer" class="sticker-drawer hide">
+              <div class="sticker-drawer-header">
+                <span>⭐ Stiker Favorit Saya (<span id="favStickerCount">0</span>)</span>
+                <button id="closeStickerDrawerBtn" class="close-btn" type="button">&times;</button>
+              </div>
+              <div id="stickerGrid" class="sticker-grid"></div>
             </div>
 
             <form id="fChat" class="chat-input-bar">
-              <label for="chatFileInput" class="chat-attach-btn" title="Lampirkan Gambar atau Berkas">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
-                </svg>
-                <span>Lampirkan</span>
+              <label for="chatFileInput" class="chat-tool-btn" title="Lampirkan Gambar, Video, Berkas">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+                <span>Berkas</span>
               </label>
-              <input type="file" id="chatFileInput" class="hide" accept="image/*,.pdf,.txt,.zip">
+              <input type="file" id="chatFileInput" class="hide" accept="image/*,video/*,.pdf,.txt,.zip">
 
-              <input id="chatTextInput" placeholder="Tulis pesan obrolan ke komunitas..." autocomplete="off" style="flex:1;margin:0" required>
-              <button class="btn sm-btn" type="submit" id="chatSendBtn" style="width:auto;padding:10px 18px;font-weight:600">
-                <span>Kirim</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              <button id="toggleStickerBtn" type="button" class="chat-tool-btn" title="Stiker Favorit">
+                <span>🎭</span>
+                <span>Stiker</span>
+              </button>
+
+              <button id="toggleVoiceBtn" type="button" class="chat-tool-btn" title="Rekam Pesan Suara (Voice Note)">
+                <span>🎙️</span>
+                <span>VN</span>
+              </button>
+
+              <input id="chatTextInput" placeholder="Tulis pesan... (balas img/video dengan .s untuk stiker)" autocomplete="off" style="flex:1;margin:0" required>
+              <button class="btn sm-btn" type="submit" id="chatSendBtn" style="width:auto;padding:9px 16px;font-weight:600">
+                <span id="chatSendBtnText">Kirim</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
               </button>
             </form>
           </div>
@@ -2113,6 +2558,290 @@ let selectedFileName = null;
 let selectedFileType = null;
 let renderedChatIds = [];
 
+// Chat State: Reply, Edit, Audio Recorder
+let currentReply = null;
+let editingChatId = null;
+let mediaRecorder = null;
+let activeAudioStream = null;
+let recordedAudioChunks = [];
+let voiceRecTimerInterval = null;
+let voiceRecSeconds = 0;
+
+// ===== FAVORITE STICKERS (LocalStorage) =====
+function getFavStickers(){
+  try {
+    return JSON.parse(localStorage.getItem("blox_fav_stickers") || "[]");
+  } catch(e) {
+    return [];
+  }
+}
+
+function saveFavSticker(url){
+  if (!url) return;
+  let favs = getFavStickers();
+  if (!favs.includes(url)) {
+    favs.unshift(url);
+    if (favs.length > 36) favs.pop(); // maks 36 stiker favorit
+    try { localStorage.setItem("blox_fav_stickers", JSON.stringify(favs)); } catch(e){}
+  }
+  updateFavStickerUI();
+}
+
+function removeFavSticker(url){
+  let favs = getFavStickers().filter(u => u !== url);
+  try { localStorage.setItem("blox_fav_stickers", JSON.stringify(favs)); } catch(e){}
+  updateFavStickerUI();
+}
+
+function isFavSticker(url){
+  return getFavStickers().includes(url);
+}
+
+function updateFavStickerUI(){
+  const favs = getFavStickers();
+  if ($("favStickerCount")) $("favStickerCount").textContent = favs.length;
+  renderStickerDrawer();
+}
+
+function renderStickerDrawer(){
+  const grid = $("stickerGrid");
+  if (!grid) return;
+  const favs = getFavStickers();
+  grid.replaceChildren();
+
+  if (!favs.length) {
+    grid.innerHTML = '<p class="mu" style="grid-column:1/-1;text-align:center;padding:24px 10px;font-size:13px">Belum ada stiker favorit.<br>Balas pesan bergambar/video dengan <b>.s</b> atau <b>.stiker</b>, lalu klik <b>⭐ Favorit</b> untuk menyimpannya di sini!</p>';
+    return;
+  }
+
+  favs.forEach(url => {
+    const fullUrl = url.startsWith("http") ? url : (CHAT_API + url);
+    const item = el("div", "sticker-item");
+    item.title = "Klik untuk langsung mengirim stiker ini";
+
+    const img = document.createElement("img");
+    img.src = fullUrl;
+    img.alt = "Stiker Favorit";
+
+    const delBtn = el("button", "sticker-del-fav", "×");
+    delBtn.title = "Hapus dari favorit";
+    delBtn.onclick = (e) => {
+      e.stopPropagation();
+      removeFavSticker(url);
+    };
+
+    item.onclick = async () => {
+      $("stickerDrawer").classList.add("hide");
+      say($("chatMsgAlert"), "Mengirim stiker favorit...");
+      try {
+        await sendChatMessage({
+          fileUrl: url,
+          fileType: "image/webp",
+          fileName: "sticker.webp",
+          isSticker: true
+        });
+        say($("chatMsgAlert"), "");
+      } catch(e) {
+        say($("chatMsgAlert"), "Gagal kirim stiker: " + e.message, "err");
+      }
+    };
+
+    item.append(img, delBtn);
+    grid.append(item);
+  });
+}
+
+if ($("toggleStickerBtn")) {
+  $("toggleStickerBtn").onclick = () => {
+    const drawer = $("stickerDrawer");
+    if (!drawer) return;
+    drawer.classList.toggle("hide");
+    if (!drawer.classList.contains("hide")) {
+      updateFavStickerUI();
+    }
+  };
+}
+if ($("closeStickerDrawerBtn")) {
+  $("closeStickerDrawerBtn").onclick = () => {
+    $("stickerDrawer").classList.add("hide");
+  };
+}
+
+// ===== REPLY & EDIT HANDLERS =====
+function setReply(chat){
+  currentReply = {
+    id: chat.id,
+    username: chat.username,
+    text: chat.text || "",
+    fileUrl: chat.fileUrl || null,
+    fileType: chat.fileType || null,
+    isSticker: Boolean(chat.isSticker)
+  };
+  cancelEdit();
+
+  $("replyTargetUser").textContent = "@" + chat.username;
+  let snippet = chat.text || "";
+  if (!snippet) {
+    if (chat.isSticker) snippet = "🎭 Stiker";
+    else if (chat.isAudio) snippet = "🎙️ Pesan Suara";
+    else if (chat.fileUrl) snippet = "📎 Berkas / Media";
+  }
+  $("replyTargetText").textContent = snippet.slice(0, 35) + (snippet.length > 35 ? "..." : "");
+  $("chatReplyBar").classList.remove("hide");
+  $("chatTextInput").focus();
+}
+
+function cancelReply(){
+  currentReply = null;
+  $("chatReplyBar").classList.add("hide");
+}
+if ($("chatReplyCancelBtn")) $("chatReplyCancelBtn").onclick = cancelReply;
+
+function setEdit(chat){
+  cancelReply();
+  editingChatId = chat.id;
+  $("editTargetText").textContent = (chat.text || "").slice(0, 30) + "...";
+  $("chatEditBar").classList.remove("hide");
+  $("chatTextInput").value = chat.text || "";
+  $("chatTextInput").focus();
+  $("chatSendBtnText").textContent = "Simpan";
+}
+
+function cancelEdit(){
+  editingChatId = null;
+  $("chatEditBar").classList.add("hide");
+  $("chatTextInput").value = "";
+  $("chatSendBtnText").textContent = "Kirim";
+}
+if ($("chatEditCancelBtn")) $("chatEditCancelBtn").onclick = cancelEdit;
+
+function scrollToMessage(id){
+  if (!id) return;
+  const target = document.querySelector(`.chat-bubble[data-id="${id}"]`);
+  if (target) {
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+    target.classList.add("highlight-quote");
+    setTimeout(() => target.classList.remove("highlight-quote"), 1200);
+  } else {
+    alert("Pesan asli sudah lewat atau tidak ada di 100 riwayat obrolan terakhir.");
+  }
+}
+
+// ===== VOICE NOTE RECORDING (MediaRecorder API) =====
+function formatTimer(totalSecs){
+  const m = Math.floor(totalSecs / 60).toString().padStart(2, "0");
+  const s = (totalSecs % 60).toString().padStart(2, "0");
+  return `${m}:${s}`;
+}
+
+async function startVoiceRecording(){
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    alert("Browser ini tidak mendukung perekaman suara (getUserMedia).");
+    return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    activeAudioStream = stream;
+
+    let mimeType = "audio/webm";
+    if (typeof MediaRecorder.isTypeSupported === "function") {
+      if (MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) mimeType = "audio/webm;codecs=opus";
+      else if (MediaRecorder.isTypeSupported("audio/ogg")) mimeType = "audio/ogg";
+      else if (MediaRecorder.isTypeSupported("audio/mp4")) mimeType = "audio/mp4";
+    }
+
+    mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
+    recordedAudioChunks = [];
+
+    mediaRecorder.ondataavailable = e => {
+      if (e.data && e.data.size > 0) recordedAudioChunks.push(e.data);
+    };
+
+    mediaRecorder.start(250);
+    voiceRecSeconds = 0;
+    $("voiceRecTimer").textContent = "00:00";
+    $("voiceRecordBar").classList.remove("hide");
+
+    clearInterval(voiceRecTimerInterval);
+    voiceRecTimerInterval = setInterval(() => {
+      voiceRecSeconds++;
+      $("voiceRecTimer").textContent = formatTimer(voiceRecSeconds);
+      if (voiceRecSeconds >= 120) { // maksimal 2 menit VN
+        stopAndSendVoiceRecording();
+      }
+    }, 1000);
+  } catch(err) {
+    alert("Gagal mengakses mikrofon: " + err.message + "\nPastikan izin mikrofon telah diberikan di browser.");
+  }
+}
+
+function cancelVoiceRecording(){
+  clearInterval(voiceRecTimerInterval);
+  if (mediaRecorder && mediaRecorder.state !== "inactive") {
+    try { mediaRecorder.stop(); } catch(e){}
+  }
+  if (activeAudioStream) {
+    activeAudioStream.getTracks().forEach(t => t.stop());
+    activeAudioStream = null;
+  }
+  recordedAudioChunks = [];
+  $("voiceRecordBar").classList.add("hide");
+}
+
+async function stopAndSendVoiceRecording(){
+  clearInterval(voiceRecTimerInterval);
+  if (!mediaRecorder || mediaRecorder.state === "inactive") return;
+
+  mediaRecorder.onstop = async () => {
+    if (activeAudioStream) {
+      activeAudioStream.getTracks().forEach(t => t.stop());
+      activeAudioStream = null;
+    }
+
+    const audioBlob = new Blob(recordedAudioChunks, { type: mediaRecorder.mimeType || "audio/webm" });
+    $("voiceRecordBar").classList.add("hide");
+
+    if (audioBlob.size < 500) {
+      say($("chatMsgAlert"), "Rekaman terlalu pendek.", "err");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async ev => {
+      const base64Audio = ev.target.result;
+      say($("chatMsgAlert"), "Mengirim pesan suara...");
+      try {
+        await sendChatMessage({
+          text: "",
+          fileData: base64Audio,
+          fileName: "voice_note.webm",
+          fileType: audioBlob.type || "audio/webm",
+          isAudio: true
+        });
+        say($("chatMsgAlert"), "");
+      } catch(e) {
+        say($("chatMsgAlert"), "Gagal kirim suara: " + e.message, "err");
+      }
+    };
+    reader.readAsDataURL(audioBlob);
+  };
+
+  try { mediaRecorder.stop(); } catch(e){}
+}
+
+if ($("toggleVoiceBtn")) {
+  $("toggleVoiceBtn").onclick = () => {
+    if ($("voiceRecordBar").classList.contains("hide")) {
+      startVoiceRecording();
+    } else {
+      stopAndSendVoiceRecording();
+    }
+  };
+}
+if ($("voiceCancelBtn")) $("voiceCancelBtn").onclick = cancelVoiceRecording;
+if ($("voiceSendBtn")) $("voiceSendBtn").onclick = stopAndSendVoiceRecording;
+
+// ===== LIVE CHAT POLLING CONTROL =====
 function updateLiveToggleUI(){
   const btn = $("chatLiveToggleBtn");
   const pill = $("chatStatusPill");
@@ -2152,11 +2881,12 @@ if ($("chatLiveToggleBtn")) {
   };
 }
 
+// ===== FILE ATTACHMENT =====
 $("chatFileInput").onchange = e => {
   const file = e.target.files && e.target.files[0];
   if (!file) return;
-  if (file.size > 20 * 1024 * 1024) {
-    alert("Ukuran berkas maksimal 20 MB!");
+  if (file.size > 25 * 1024 * 1024) {
+    alert("Ukuran berkas maksimal 25 MB!");
     e.target.value = "";
     return;
   }
@@ -2180,63 +2910,201 @@ $("fileCancelBtn").onclick = () => {
   $("filePreviewBar").classList.add("hide");
 };
 
+// ===== RENDER BUBBLE OBROLAN =====
 function renderChatBubble(c, isNew){
   const isMine = me && (c.username === me.username);
   const b = el("div", "chat-bubble" + (isMine ? " mine" : "") + (isNew ? " new-entry" : ""));
   b.setAttribute("data-id", c.id);
 
   const av = el("div", "chat-avatar", (c.username && c.username[0].toUpperCase()) || "U");
-  const content = el("div", "chat-bubble-content");
+  const content = el("div", "chat-bubble-content" + (c.isSticker ? " chat-sticker-container" : ""));
 
-  const header = el("div", "chat-bubble-header");
-  const name = el("b", "", c.username);
-  const srcTag = el("span", "chat-source-tag", c.source === "wa" ? "📱 WA" : "🌐 Web");
-  const time = el("span", "chat-time", c.timeStr || "");
-  header.append(name, srcTag, time);
+  // Header bubble (username, waktu, tag wa/web)
+  if (!c.isSticker) {
+    const header = el("div", "chat-bubble-header");
+    const name = el("span", "chat-sender-name", c.username + (isMine ? " (Kamu)" : ""));
+    const srcTag = el("span", "chat-source-tag", c.source === "wa" ? "📱 WA" : "🌐 Web");
+    const time = el("span", "chat-time", c.timeStr || "");
+    header.append(name, srcTag, time);
 
-  if (me && me.is_admin) {
-    const delBtn = el("button", "chat-del-btn", "Hapus");
-    delBtn.onclick = async () => {
-      if (!confirm("Hapus pesan ini dari chat place?")) return;
-      try {
-        await fetch(CHAT_API + "/api/chat/" + c.id, { method: "DELETE" });
-        loadChats(true);
-      } catch(e) { alert(e.message); }
-    };
-    header.append(delBtn);
+    if (c.isEdited) {
+      const edTag = el("span", "chat-edited-tag", "(diedit)");
+      header.append(edTag);
+    }
+    content.append(header);
   }
 
-  content.append(header);
+  // Quoted reply snippet
+  if (c.replyTo) {
+    const qBox = el("div", "chat-quote-box");
+    const qAuthor = el("div", "chat-quote-author", "↩ @" + (c.replyTo.username || "Pengguna"));
+    let qSnippet = c.replyTo.text || "";
+    if (!qSnippet) {
+      if (c.replyTo.isSticker) qSnippet = "🎭 Stiker";
+      else if (c.replyTo.fileUrl) qSnippet = "📎 Lampiran berkas";
+    }
+    const qText = el("div", "chat-quote-snippet", qSnippet);
+    qBox.append(qAuthor, qText);
+    qBox.onclick = () => scrollToMessage(c.replyTo.id);
+    content.append(qBox);
+  }
 
+  const fullUrl = c.fileUrl ? (c.fileUrl.startsWith("http") ? c.fileUrl : (CHAT_API + c.fileUrl)) : null;
+
+  // Stiker
+  if (c.isSticker && fullUrl) {
+    const img = document.createElement("img");
+    img.src = fullUrl;
+    img.className = "chat-sticker-img";
+    img.alt = "Stiker";
+
+    const isFav = isFavSticker(c.fileUrl);
+    const favBtn = el("button", "chat-sticker-fav-btn", isFav ? "★ Tersimpan" : "⭐ Simpan Favorit");
+    favBtn.type = "button";
+    favBtn.onclick = () => {
+      if (isFavSticker(c.fileUrl)) {
+        removeFavSticker(c.fileUrl);
+        favBtn.textContent = "⭐ Simpan Favorit";
+      } else {
+        saveFavSticker(c.fileUrl);
+        favBtn.textContent = "★ Tersimpan";
+      }
+    };
+
+    content.append(img, favBtn);
+  }
+  // Audio Voice Note
+  else if ((c.isAudio || (c.fileType && c.fileType.includes("audio")) || (c.fileUrl && /\.(webm|ogg|mp3|wav|m4a)$/i.test(c.fileUrl))) && fullUrl) {
+    const aWrap = el("div", "chat-audio-wrap");
+    const aTitle = el("div", "chat-audio-title", "🎙️ Pesan Suara (" + (c.timeStr || "") + ")");
+    const audio = document.createElement("audio");
+    audio.controls = true;
+    audio.preload = "none";
+    audio.src = fullUrl;
+    audio.className = "chat-audio-player";
+    aWrap.append(aTitle, audio);
+    content.append(aWrap);
+  }
+  // Gambar
+  else if (fullUrl && ((c.fileType && c.fileType.startsWith("image")) || /\.(jpg|jpeg|png|gif|webp)$/i.test(c.fileUrl))) {
+    const img = document.createElement("img");
+    img.src = fullUrl;
+    img.className = "chat-img-preview";
+    img.alt = "Lampiran gambar";
+    img.onclick = () => window.open(fullUrl, "_blank");
+    content.append(img);
+  }
+  // Video
+  else if (fullUrl && ((c.fileType && c.fileType.startsWith("video")) || /\.(mp4|mov|webm)$/i.test(c.fileUrl))) {
+    const video = document.createElement("video");
+    video.src = fullUrl;
+    video.controls = true;
+    video.preload = "metadata";
+    video.className = "chat-video-preview";
+    content.append(video);
+  }
+  // Berkas Lainnya
+  else if (fullUrl) {
+    const fileLink = document.createElement("a");
+    fileLink.href = fullUrl;
+    fileLink.target = "_blank";
+    fileLink.className = "chat-file-card";
+    fileLink.textContent = "📎 " + (c.fileName || "Buka Berkas");
+    content.append(fileLink);
+  }
+
+  // Teks Pesan
   if (c.text) {
     const text = el("div", "chat-bubble-text", c.text);
     content.append(text);
   }
 
-  if (c.fileUrl) {
-    const isImg = (c.fileType && c.fileType.startsWith("image")) || /\.(jpg|jpeg|png|gif|webp)$/i.test(c.fileUrl);
-    const fullUrl = c.fileUrl.startsWith("http") ? c.fileUrl : (CHAT_API + c.fileUrl);
-    if (isImg) {
-      const img = document.createElement("img");
-      img.src = fullUrl;
-      img.className = "chat-img-preview";
-      img.alt = "Lampiran gambar";
-      img.onclick = () => window.open(fullUrl, "_blank");
-      content.append(img);
-    } else {
-      const fileLink = document.createElement("a");
-      fileLink.href = fullUrl;
-      fileLink.target = "_blank";
-      fileLink.className = "chat-file-card";
-      fileLink.textContent = "📎 " + (c.fileName || "Buka Berkas");
-      content.append(fileLink);
-    }
+  // Action Toolbar (Balas, Edit, Hapus)
+  const actBar = el("div", "chat-actions");
+
+  // Tombol Balas
+  const repBtn = el("button", "chat-act-btn", "↩ Balas");
+  repBtn.type = "button";
+  repBtn.onclick = () => setReply(c);
+  actBar.append(repBtn);
+
+  // Tombol Edit (Hanya jika chat teks milik sendiri atau admin)
+  const canEdit = (isMine || (me && me.is_admin)) && c.text && !c.isSticker;
+  if (canEdit) {
+    const edBtn = el("button", "chat-act-btn", "✏️ Edit");
+    edBtn.type = "button";
+    edBtn.onclick = () => setEdit(c);
+    actBar.append(edBtn);
   }
 
+  // Tombol Hapus (Milik sendiri atau admin)
+  const canDelete = isMine || (me && me.is_admin);
+  if (canDelete) {
+    const delBtn = el("button", "chat-act-btn del", "🗑️ Hapus");
+    delBtn.type = "button";
+    delBtn.onclick = () => deleteChat(c.id);
+    actBar.append(delBtn);
+  }
+
+  content.append(actBar);
   b.append(av, content);
   return b;
 }
 
+// ===== API CALLS FOR CHAT =====
+async function deleteChat(id){
+  if (!confirm("Hapus pesan ini dari ruang percakapan?")) return;
+  try {
+    const res = await fetch(CHAT_API + "/api/chat/" + id, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: me ? me.username : null,
+        isAdmin: Boolean(me && me.is_admin)
+      })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || ("Gagal menghapus (" + res.status + ")"));
+    }
+    loadChats(true);
+  } catch(e) {
+    alert("Gagal menghapus pesan: " + e.message);
+  }
+}
+
+async function sendChatMessage(customPayload = {}){
+  const payload = {
+    username: (me && me.username) || "Anonim",
+    text: "",
+    fileData: customPayload.fileUrl ? null : selectedFileData,
+    fileName: selectedFileName,
+    fileType: selectedFileType,
+    source: "web",
+    replyTo: currentReply,
+    isSticker: false,
+    isAudio: false,
+    ...customPayload
+  };
+
+  const res = await fetch(CHAT_API + "/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || ("Gagal mengirim (" + res.status + ")"));
+  }
+
+  cancelReply();
+  cancelEdit();
+  if ($("fileCancelBtn")) $("fileCancelBtn").click();
+  await loadChats(true);
+}
+
+// ===== LOAD CHATS DENGAN ANTI-JITTER =====
 async function loadChats(forceReload = false){
   try {
     const res = await fetch(CHAT_API + "/api/chat?limit=100");
@@ -2256,19 +3124,17 @@ async function loadChats(forceReload = false){
       return;
     }
 
-    // Bandingkan ID obrolan untuk mencegah re-render & getaran (zero flicker)
-    const newIds = chats.map(c => c.id);
+    const newIds = chats.map(c => c.id + "_" + (c.isEdited ? "ed" : "0") + "_" + (c.text || "").length);
     const isIdentical = (newIds.length === renderedChatIds.length) &&
       newIds.every((id, idx) => id === renderedChatIds[idx]);
 
     if (isIdentical && !forceReload) {
-      // Tidak ada perubahan sama sekali -> biarkan DOM apa adanya tanpa jitter!
       return;
     }
 
-    const isNearBottom = (list.scrollHeight - list.scrollTop - list.clientHeight) < 90;
+    const isNearBottom = (list.scrollHeight - list.scrollTop - list.clientHeight) < 100;
 
-    // Jika hanya bertambah pesan baru di akhir (append-only)
+    // Append-only jika hanya bertambah pesan baru di akhir
     const canAppendOnly = !forceReload &&
       renderedChatIds.length > 0 &&
       newIds.length > renderedChatIds.length &&
@@ -2286,7 +3152,7 @@ async function loadChats(forceReload = false){
       return;
     }
 
-    // Re-render penuh (hanya jika muat pertama kali, force refresh, atau ada pesan terhapus)
+    // Re-render
     list.replaceChildren();
     chats.forEach(c => {
       list.append(renderChatBubble(c, false));
@@ -2303,6 +3169,7 @@ async function loadChats(forceReload = false){
   }
 }
 
+// Form Submit Handler
 $("fChat").onsubmit = async e => {
   e.preventDefault();
   const input = $("chatTextInput");
@@ -2311,33 +3178,45 @@ $("fChat").onsubmit = async e => {
 
   const btn = $("chatSendBtn");
   btn.disabled = true;
-  say($("chatMsgAlert"), "Mengirim pesan...");
 
+  // Mode Edit Pesan
+  if (editingChatId) {
+    say($("chatMsgAlert"), "Memperbarui pesan...");
+    try {
+      const res = await fetch(CHAT_API + "/api/chat/" + editingChatId, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text,
+          username: me ? me.username : null,
+          isAdmin: Boolean(me && me.is_admin)
+        })
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || ("Gagal edit (" + res.status + ")"));
+      }
+      cancelEdit();
+      say($("chatMsgAlert"), "");
+      await loadChats(true);
+    } catch(err) {
+      say($("chatMsgAlert"), "Gagal mengedit chat: " + err.message, "err");
+    }
+    btn.disabled = false;
+    return;
+  }
+
+  // Mode Kirim Pesan Baru
+  say($("chatMsgAlert"), "Mengirim pesan...");
   try {
-    const payload = {
-      username: (me && me.username) || "Anonim",
+    await sendChatMessage({
       text,
       fileData: selectedFileData,
       fileName: selectedFileName,
-      fileType: selectedFileType,
-      source: "web"
-    };
-
-    const res = await fetch(CHAT_API + "/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      fileType: selectedFileType
     });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.message || ("Gagal mengirim (" + res.status + ")"));
-    }
-
     input.value = "";
-    $("fileCancelBtn").click();
     say($("chatMsgAlert"), "");
-    await loadChats(true);
   } catch (err) {
     say($("chatMsgAlert"), "Gagal mengirim chat: " + err.message, "err");
   }
@@ -2404,10 +3283,6 @@ function show(){
   if($("sideStatusBadge")){
     $("sideStatusBadge").textContent = statusText;
     $("sideStatusBadge").className = statusClass;
-  }
-  if($("headerStatusBadge")){
-    $("headerStatusBadge").textContent = statusText;
-    $("headerStatusBadge").className = statusClass;
   }
   if($("dashAv")) $("dashAv").textContent = initial;
   if($("dashUsername")) $("dashUsername").textContent = me.username;
